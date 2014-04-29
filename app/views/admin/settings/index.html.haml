@@ -1,0 +1,40 @@
+.page-header
+  %h1 Settings
+  %p 
+    %span.label.label-danger Watch Out!
+    Changes in the Settings have effect directly on the website's behavior, so make sure you know what you're doing =]
+  %ol.breadcrumb
+    %li= @group.main_group
+    %li= @group.display_name
+%table.table.table-striped
+
+  %thead
+    %tr
+      %th Setting      
+      %th Value
+      %th          
+  %tbody
+    - @booleans.each do |s|
+      %tr
+        %td= s.display_name
+        %td= bs_display(:boolean, { :object => s, :field_name => :value })
+        %td= bs_display(:links, { :edit => admin_edit_setting_path(@group.key, :boolean, s.key) })
+    - @strings.each do |s|
+      %tr       
+        %td= s.display_name
+        -if s.type == "ImageSetting"
+          %td= bs_display(:image, { :object => s, :field_name => :value })
+          %td= bs_display(:links, { :edit => admin_edit_setting_path(@group.key, :image, s.key) })
+        -elsif s.type == "FileSetting"
+          %td
+            %a{:href => "#{s.value_url}"}= s.value_url
+          %td= bs_display(:links, { :edit => admin_edit_setting_path(@group.key, :file, s.key) })
+        -else
+          %td= s.value
+          %td= bs_display(:links, { :edit => admin_edit_setting_path(@group.key, :string, s.key) })
+    - @texts.each do |s|
+      %tr
+        %td= s.display_name
+        %td= s.value
+        %td= bs_display(:links, { :edit => admin_edit_setting_path(@group.key, :text, s.key) })  
+    

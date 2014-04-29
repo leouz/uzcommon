@@ -1,0 +1,24 @@
+class Admin::<%= @model_name.pluralize %>Controller < AdminControllerBase
+  def index    
+  end
+
+  def get
+    render :json => <%= @model_name %>.order("created_at DESC").all
+  end
+
+  def create    
+    params[:<%= @model_name.underscore %>][:<%= @uploader_col %>] = params[:<%= @model_name.underscore %>][:<%= @uploader_col %>].first
+    <%= @uploader_col %> = params[:<%= @model_name.underscore %>][:<%= @uploader_col %>]
+    <%= @model_name.underscore %> = <%= @model_name %>.new(params[:<%= @model_name.underscore %>])    
+    if <%= @model_name.underscore %>.save          
+      render :json => { :id => <%= @model_name.underscore %>.id, :url => <%= @model_name.underscore %>.<%= @uploader_col %>.url, :thumb => <%= @model_name.underscore %>.<%= @uploader_col %>_url(:thumb), :<%= @uploader_col %> => <%= @uploader_col %> }
+    else
+      render :json => { :erros => <%= @model_name.underscore %>.errors.full_messages.join(', ').html_safe }, :status => 404
+    end
+  end
+
+  def destroy
+    params[:<%= @model_name.underscore.pluralize %>].each{ |p| <%= @model_name %>.find(p).destroy }
+    render :nothing => true
+  end
+end

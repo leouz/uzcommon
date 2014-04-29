@@ -1,0 +1,16 @@
+@mixin absolute-vertical-center($height) {
+  position: absolute; 
+  top: 50%; 
+  margin-top: -($height/2); 
+}
+
+@mixin absolute-horizontal-center($width) {
+  position: absolute; 
+  left: 50%; 
+  margin-left: -($width/2); 
+}
+
+@mixin absolute-center-center($width, $height) {
+  @include absolute-horizontal-center($width);
+  @include absolute-vertical-center($height);
+}

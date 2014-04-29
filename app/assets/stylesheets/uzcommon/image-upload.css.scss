@@ -1,0 +1,22 @@
+#image-upload-images {
+  .thumb { 
+    background-position: center;
+    width: 140px;
+    height: 100px;
+    background-size: cover;    
+    display: inline-block; 
+    margin-right: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    input, span {
+      position: absolute;
+      top: -4px;
+      right: -1px;
+    }   
+    span { top: -1px; }
+  }
+}
+
+#image-upload-remove-selected {
+  padding-left: 0px;
+}

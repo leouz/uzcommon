@@ -1,0 +1,22 @@
+@mixin triangle($size) {
+  border-left: $size solid transparent;
+  border-right: $size solid transparent;  
+  position: fixed;
+  width: 0; 
+  height: 0;
+  left: 50%;
+}
+
+@mixin triangle-up($size, $color) {
+  @include triangle($size);     
+  border-bottom: $size solid $color;
+  margin-left: -$size;
+}
+
+@mixin triangle-down($size, $color) {
+  @include triangle($size);     
+  border-top: $size solid $color;
+  margin-left: -$size;
+}
+
+

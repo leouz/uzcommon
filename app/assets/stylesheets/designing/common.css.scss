@@ -1,0 +1,59 @@
+.seo { display: none; }
+
+@mixin font($family, $size, $color) {
+  font-family: $family; 
+  font-size: $size; 
+  color: $color;
+}
+
+@mixin font2($family, $color) {
+  font-family: $family;   
+  color: $color;
+}
+
+@mixin all-link-states() {
+  a:link, a:visited, a:hover, a:active { 
+    @content;
+  }
+}
+
+@mixin top-bottom($property, $size) {
+ #{$property}-top: $size;
+ #{$property}-bottom: $size;  
+}
+
+@mixin left-right($property, $size) {
+ #{$property}-left: $size;
+ #{$property}-right: $size;  
+}
+
+@mixin install-font-ttf ($name, $url) {
+  @font-face {
+    font-family: $name;
+    src: font-url($url) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@mixin install-font-otf ($name, $url) {
+  @font-face {
+    font-family: $name;
+    src: font-url($url) format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+@mixin install-font-bulletprof ($family, $filename) {
+  @font-face {
+    font-family: $family;
+    src: font-url("#{$filename}.eot");
+    src: font-url("#{$filename}.eot?#iefix") format('embedded-opentype'),
+         font-url("#{$filename}.woff") format('woff'),
+         font-url("#{$filename}.ttf") format('truetype'),
+         font-url("#{$filename}.svg##{$family}") format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }    
+}

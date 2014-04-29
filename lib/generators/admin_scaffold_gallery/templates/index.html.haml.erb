@@ -1,0 +1,8 @@
+%input.fileupload{ :id => "<%= @model_name.underscore %>",
+ :type => "file",
+ :name => "<%= @model_name.underscore %>[<%= @uploader_col %>][]",
+ :multiple => "",
+ "get-images-url" => "/admin/<%= @model_name.underscore.pluralize %>/get",
+ "destroy-images-url" => "/admin/<%= @model_name.underscore.pluralize %>/destroy",
+ "data-url" => "#{admin_<%= @model_name.underscore.pluralize %>_path}",
+ "data-group" => "all" }

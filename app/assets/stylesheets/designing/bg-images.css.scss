@@ -1,0 +1,39 @@
+@mixin bg-image-base($url, $width, $height) {
+  background-image: image-url($url);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: $width $height;    
+  width: $width;
+  height: $height;
+}
+
+@mixin bg-image($url) {
+  @include bg-image-base($url, image-width($url), image-height($url));  
+}
+
+@mixin bg-image-2x($url) {
+  @include bg-image-base($url, (image-width($url)/2), (image-height($url)/2));  
+}
+
+@mixin bg-image-absolute-horizontal-center($url) {
+  @include bg-image($url);  
+  left: 50%;
+  margin-left: -(image-width($url)/2);
+  position: absolute;
+}
+
+@mixin bg-image-absolute-vertical-center($url) {
+  @include bg-image($url);  
+  top: 50%;
+  margin-top: -(image-height($url)/2);
+  position: absolute;
+}
+
+@mixin bg-image-absolute-center($url) {
+  @include bg-image($url);  
+  top: 50%;
+  margin-top: -(image-height($url)/2);
+  left: 50%;
+  margin-left: -(image-width($url)/2);
+  position: absolute;
+}

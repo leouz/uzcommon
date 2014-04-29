@@ -1,0 +1,23 @@
+// $ar-max-window-size: 1200px;
+// $ar-min-window-size: 960px;
+// $ar-number-of-breaks: 10;
+// $ar-min-size: 7;
+
+$ar-diff: $ar-max-window-size - $ar-min-window-size;
+$ar-diff-percent: $ar-diff / $ar-number-of-breaks;
+
+@mixin ar($property, $max-value) {  
+  $min-value: ($max-value / $ar-number-of-breaks) * $ar-min-size;
+  $value-diff: $max-value - $min-value;
+  $value-diff-percent: $value-diff / $ar-number-of-breaks;
+
+  @media only screen and (min-width : 0px) {
+    #{$property}: $min-value;
+  }
+
+  @for $i from 1 through $ar-number-of-breaks {
+    @media only screen and (min-width : $ar-min-window-size + ($i * $ar-diff-percent)) {
+      #{$property}: $min-value + ($i * $value-diff-percent);
+    }
+  }
+}
