@@ -1,0 +1,41 @@
+class Admin::<%= @model_name.pluralize %>Controller < AdminControllerBase  
+  def index    
+    search = params[:search].blank? ? <%= @model_name %> : <%= @model_name %>.where('<%= @search_col %> LIKE ?', "%#{params[:search]}%")
+    @<%= @model_name.underscore.pluralize %> = search.order("created_at DESC").page(params[:page]).per(10)
+  end
+
+  def new
+    @<%= @model_name.underscore %> = <%= @model_name %>.new
+  end
+
+  def edit
+    @<%= @model_name.underscore %> = <%= @model_name %>.find(params[:id])
+  end
+
+  def create
+    @<%= @model_name.underscore %> = <%= @model_name %>.new(params[:<%= @model_name.underscore %>])
+    
+    if @<%= @model_name.underscore %>.save
+      redirect_to admin_<%= @model_name.underscore.pluralize %>_url, notice: "<%= @model_name %> was successfully created."
+    else
+      render action: "new"
+    end    
+  end
+
+  def update
+    @<%= @model_name.underscore %> = <%= @model_name %>.find(params[:id])
+    
+    if @<%= @model_name.underscore %>.update_attributes(params[:<%= @model_name.underscore %>])
+      redirect_to admin_<%= @model_name.underscore.pluralize %>_url, notice: "<%= @model_name %> was successfully updated."
+    else
+      render action: "edit"
+    end
+  end
+
+  def destroy
+    @<%= @model_name.underscore %> = <%= @model_name %>.find(params[:id])
+    @<%= @model_name.underscore %>.destroy
+    
+    redirect_to admin_<%= @model_name.underscore.pluralize %>_url    
+  end
+end

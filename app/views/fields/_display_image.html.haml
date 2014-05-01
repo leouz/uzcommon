@@ -1,4 +1,0 @@
--object, field_name = options[:object], options[:field_name]
--if object.send("#{field_name}?")
-  %a{ :href => "#{object.send(field_name).send('url')}" }
-    = image_tag object.send(field_name).tap {|o| break o.send(:thumb) }.send('url'), :class => 'img-thumbnail'
