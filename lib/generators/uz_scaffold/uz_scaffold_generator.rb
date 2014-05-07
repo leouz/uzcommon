@@ -5,10 +5,11 @@ class UzScaffoldGenerator < Rails::Generators::Base
   
   def generate    
     init_base params
+    @search_col = @columns.first[:name]
     template_view "index.html.haml"
     template_view "new.html.haml"
     template_view "edit.html.haml"
     template_view "_form.html.haml"
-    # template_controller "controller.rb"
+    template_controller "controller.rb"
   end 
 end

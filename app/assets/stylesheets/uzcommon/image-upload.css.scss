@@ -1,4 +1,12 @@
-#image-upload-images {
+.image-upload-buttons {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  > * {
+    margin-right: 5px;
+  }
+}
+
+.image-upload-images {  
   .thumb { 
     background-position: center;
     width: 140px;
@@ -17,6 +25,6 @@
   }
 }
 
-#image-upload-remove-selected {
+.image-upload-remove-selected {
   padding-left: 0px;
 }

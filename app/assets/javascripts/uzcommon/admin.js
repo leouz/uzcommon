@@ -27,4 +27,24 @@ jQuery(function() {
     $(this).change(update);
     $(this).change();    
   })
+
+  $('.sort-last').click(function () {
+    $thisTr = $(this).parent().parent().parent();    
+    $thisTr.parent().append($thisTr);
+  });
+
+  $('.sort-first').click(function () {
+    $thisTr = $(this).parent().parent().parent();    
+    $thisTr.parent().prepend($thisTr);
+  });
+
+  $('.sort-down').click(function () {
+    $thisTr = $(this).parent().parent().parent();
+    $thisTr.insertAfter($thisTr.next());
+  });
+
+  $('.sort-up').click(function () {
+    $thisTr = $(this).parent().parent().parent(); 
+    $thisTr.insertBefore($thisTr.prev());
+  });
 });

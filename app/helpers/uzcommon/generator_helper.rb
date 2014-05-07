@@ -33,8 +33,8 @@ module Uzcommon::GeneratorHelper
       
       { type: "decimal",   input: "currency",  display: "currency"  },
 
-      { type: "float",     input: "number",    display: "string"    },
-      { type: "integer",   input: "number",    display: "string"    },
+      { type: "float",     input: "number",    display: "number"    },
+      { type: "integer",   input: "number",    display: "number"    },
 
       { type: "string",    input: "string",    display: "string"    },
       { type: "string",    input: "permalink", display: "link"      },
@@ -123,15 +123,15 @@ module Uzcommon::GeneratorHelper
   end
 
   def template_view template_name
-    root_path = "app/views"
-    root_path = root_path + @path if @path
-    template "#{template_name}.erb", File.join(root_path, @model_name.underscore.pluralize, template_name)
+    path = "app/views"
+    path = path + @path if @path
+    template "#{template_name}.erb", File.join(path, @model_name.underscore.pluralize, template_name)
   end 
 
   def template_controller template_name
-    root_path = "app/controllers"
-    root_path = root_path + @path if @path
-    template "#{template_name}.erb", File.join('app/controllers', "#{@model_name.underscore.pluralize}_controller.rb")
+    path = "app/controllers"
+    path = path + @path if @path
+    template "#{template_name}.erb", File.join(path, "#{@model_name.underscore.pluralize}_controller.rb")
   end
 
   def template_model template_name

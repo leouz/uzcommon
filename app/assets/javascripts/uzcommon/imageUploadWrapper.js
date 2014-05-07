@@ -2,14 +2,14 @@ $(document).ready(function() {
   $.fn.extend({
     imageUploadWrapper: function (options) {
       // input example:
-      //<input id="fileupload" type="file" name="asset[file][]"
-      // multiple="" get-images-url="/admin/assets/get" destroy-images-url="/admin/assets/destroy"
+      //<input class="imageUploadWrapper" type="file" name="asset[filAlle][]"
+      // multiple="" get-all-url="/admin/assets/get" destroy-url="/admin/assets/destroy"
       // data-url="#{admin_assets_path}" data-group="all" />
 
       this.options = {
         isMultiple: null,// true/false,
-        destroyImagesUrl: null,// "/admin/assets/destroy",
-        getImagesUrl: null,// "/admin/assets/get",
+        destroyUrl: null,// "/admin/assets/destroy",
+        allUrl: null,// "/admin/assets/get",
 
         events: {
           onUploadStart: function (data, file) {},
@@ -19,17 +19,17 @@ $(document).ready(function() {
         },
         templates: {
           buttons: function () {
-            return $('<div id="image-upload-buttons">').append(
-                $('<button id="image-upload-remove-selected" class="btn btn-xs btn-danger" type="submit">').append(
-                  $('<span class="glyphicon glyphicon-trash">').append('Remove selected')),
+            return $('<div class="image-upload-buttons">').append(
+                $('<button class="image-upload-remove-selecte btn btn-xs btn-danger" type="submit">').append(
+                  $('<span class="glyphicon glyphicon-trash">'), 'Remove selected'),
                 $('<span class="check-all btn btn-xs btn-info">').append(
-                  $('<span class="glyphicon glyphicon-check">').append('Check All')),
+                  $('<span class="glyphicon glyphicon-check">'), 'Check All'),
                 $('<span class="uncheck-all btn btn-xs btn-info">').append(
-                  $('<span class="glyphicon glyphicon-check">').append('Uncheck All'))
+                  $('<span class="glyphicon glyphicon-check">'), 'Uncheck All')
               );
           },
           displayImageContainer: function () {
-            return $('<div id="image-upload-images">');
+            return $('<div class="image-upload-images">');
           },
           imageThumb: function (id, url, thumbUrl) {
             var div = $('<div>').addClass('thumb img img-thumbnail').css({"background-image": "url('" + thumbUrl + "')"});
@@ -51,7 +51,7 @@ $(document).ready(function() {
       };
       this.options = $.extend(true, {}, this.options, options || {});
       this.reset = function () {
-        $('div#image-upload-images').empty();
+        $('div.image-upload-images').empty();
       };
 
       var $element = $(this);
@@ -59,18 +59,16 @@ $(document).ready(function() {
       
       if (_options.isMultiple == null)
         _options.isMultiple = $element.is('[multiple]');
-      if (_options.destroyImagesUrl == null)
-        _options.destroyImagesUrl = $element.attr('destroy-images-url');
-      if (_options.getImagesUrl == null)
-        _options.getImagesUrl = $element.attr('get-images-url');
-
+      if (_options.destroyUrl == null)
+        _options.destroyUrl = $element.attr('destroy-url');
+      if (_options.getAllUrl == null)
+        _options.getAllUrl = $element.attr('get-all-url');
       
-
       var deleteCheckedImages = function () {
         var $checked = $('input.img.check:checked');
         var data = $checked.map(function() { return $(this).val(); }).get();
         if (data.length > 0)
-          $.post(_options.destroyImagesUrl, { assets: data }, function () {
+          $.post(_options.destroyUrl, { assets: data }, function () {
             $.each($checked, function (i, e) {
               $(e).parent().fadeOut(1500, function () { $(this).remove(); });
             });
@@ -101,13 +99,13 @@ $(document).ready(function() {
         });
 
         //initialize remove checked
-        $(document).on('click', '#image-upload-remove-selected', function() {
+        $(document).on('click', '.image-upload-remove-selected', function() {
           deleteCheckedImages();
         });
       
-        $.get(_options.getImagesUrl, function(data) {
+        $.get(_options.getAllUrl, function(data) {
           $.each(data, function(i, e) {
-            $('div#image-upload-images').append(_options.templates.imageThumb(e.id, e.file.url, e.file.thumb.url));
+            $('div.image-upload-images').append(_options.templates.imageThumb(e.id, e.url, e.thumb));
           });
         });
       } else {
@@ -130,10 +128,10 @@ $(document).ready(function() {
             if (!_options.isMultiple) {
               $('.check').prop('checked', true);              
               deleteCheckedImages();
-              $('div#image-upload-images').empty();  
+              $('div.image-upload-images').empty();  
             }
 
-            $('div#image-upload-images').prepend(data.context);
+            $('div.image-upload-images').prepend(data.context);
 
             _options.events.onUploadStart(data, file);
             return data.submit();
