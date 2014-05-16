@@ -4,7 +4,7 @@ class AssetUploader < CarrierWave::Uploader::Base
   include Sprockets::Helpers::IsolatedHelper
   
   storage :file
-  process :resize_to_limit => [700, 700]
+  process :resize_to_limit => [1000, 1000]
   
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
