@@ -22,10 +22,24 @@
   position: absolute;
 }
 
+@mixin bg-image-absolute-horizontal-center-2x($url) {
+  @include bg-image-2x($url);  
+  left: 50%;
+  margin-left: -(image-width($url)/4);
+  position: absolute;
+}
+
 @mixin bg-image-absolute-vertical-center($url) {
   @include bg-image($url);  
   top: 50%;
   margin-top: -(image-height($url)/2);
+  position: absolute;
+}
+
+@mixin bg-image-absolute-vertical-center-2x($url) {
+  @include bg-image-2x($url);  
+  top: 50%;
+  margin-top: -(image-height($url)/4);
   position: absolute;
 }
 
@@ -37,3 +51,13 @@
   margin-left: -(image-width($url)/2);
   position: absolute;
 }
+
+@mixin bg-image-absolute-center-2x($url) {
+  @include bg-image-2x($url);  
+  top: 50%;
+  margin-top: -(image-height($url)/4);
+  left: 50%;
+  margin-left: -(image-width($url)/4);
+  position: absolute;
+}
+

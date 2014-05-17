@@ -13,5 +13,5 @@
   -@type = "textarea" if @type == "text"
   -@type = "text" if @type == "string"
   -@type = "checkbox" if @type == "boolean"
-  = bs_field f, :value, @type, { :hint => @setting.hint, :label => @setting.display_name }
+  = bs_input f, :value, @type, { :hint => @setting.hint, :label => @setting.display_name }
   = bs_actions f, admin_settings_group_path(@setting.group.key)

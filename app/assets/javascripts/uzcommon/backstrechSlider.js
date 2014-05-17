@@ -25,7 +25,7 @@ $(document).ready(function() {
 
       $image.click(function () {
         var i = $image.data("backstretch").index;
-        this.options.onImageClick(i, this.options.data[i]);      
+        options.onImageClick(i, options.data[i]);      
       });
 
       var refreshBullets = function (index) {        

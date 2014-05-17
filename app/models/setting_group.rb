@@ -10,8 +10,8 @@ class SettingGroup < ActiveRecord::Base
     
     
     define_method("create_#{t}") do |params|
-      if t == "image" and params[:value]
-        params[:value] = File.open(File.join(Rails.root, "/public/seed-files/" + params[:value]))
+      if (t == "image" or  t == "file") and params[:value]
+        params[:value] = File.open(File.join(Rails.root, "/db/seed-files/" + params[:value]))
       end
 
       s = self.send(t_plural).find_by_key(params[:key])
@@ -23,11 +23,6 @@ class SettingGroup < ActiveRecord::Base
     end
   
   end
-
-  # s.value.store!(File.open(File.join(Rails.root, params[:value])))
-  #   s.value.store_path(File.join(Rails.root, params[:value]))
-  #   s.save!
-  # end
 
   def self.get_setting group_key, key
     g = get_group group_key
