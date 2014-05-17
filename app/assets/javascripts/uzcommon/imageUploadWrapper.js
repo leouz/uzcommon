@@ -10,7 +10,7 @@ $(document).ready(function() {
         isMultiple: null,// true/false,
         destroyUrl: null,// "/admin/assets/destroy",
         allUrl: null,// "/admin/assets/get",
-
+        name: null,
         events: {
           onUploadStart: function (data, file) {},
           onUploadProgress: function (data, progress) {},
@@ -20,7 +20,7 @@ $(document).ready(function() {
         templates: {
           buttons: function () {
             return $('<div class="image-upload-buttons">').append(
-                $('<button class="image-upload-remove-selecte btn btn-xs btn-danger" type="submit">').append(
+                $('<button class="image-upload-remove-selected btn btn-xs btn-danger" type="submit">').append(
                   $('<span class="glyphicon glyphicon-trash">'), 'Remove selected'),
                 $('<span class="check-all btn btn-xs btn-info">').append(
                   $('<span class="glyphicon glyphicon-check">'), 'Check All'),
@@ -63,6 +63,8 @@ $(document).ready(function() {
         _options.destroyUrl = $element.attr('destroy-url');
       if (_options.getAllUrl == null)
         _options.getAllUrl = $element.attr('get-all-url');
+      // if (_options.name == null)
+        // _options.name = $element.attr('name');
       
       var deleteCheckedImages = function () {
         var $checked = $('input.img.check:checked');
