@@ -1,21 +1,40 @@
 // $ar-max-window-size: 1200px;
 // $ar-min-window-size: 960px;
-// $ar-number-of-breaks: 10;
-// $ar-min-size: 7;
+// $ar-number-of-media-queries: 10;
+// if set to 70, the minimum value for a value will be 70% of its max size
+// $ar-min-size-percentage: 70;
 
 $ar-diff: $ar-max-window-size - $ar-min-window-size;
-$ar-diff-percent: $ar-diff / $ar-number-of-breaks;
+$ar-diff-percent: $ar-diff / $ar-number-of-media-queries;
 
-@mixin ar($property, $max-value) {  
-  $min-value: ($max-value / $ar-number-of-breaks) * $ar-min-size;
+@mixin ar($property, $max-value) {
+
+  $min-value: ($max-value / 100) * $ar-min-size-percentage;
   $value-diff: $max-value - $min-value;
-  $value-diff-percent: $value-diff / $ar-number-of-breaks;
+  $value-diff-percent: $value-diff / $ar-number-of-media-queries;
 
   @media only screen and (min-width : 0px) {
     #{$property}: $min-value;
   }
 
-  @for $i from 1 through $ar-number-of-breaks {
+  @for $i from 1 through $ar-number-of-media-queries {
+    @media only screen and (min-width : $ar-min-window-size + ($i * $ar-diff-percent)) {
+      #{$property}: $min-value + ($i * $value-diff-percent);
+    }
+  }
+}
+
+@mixin ar-plus($property, $min-value) {
+
+  $max-value: (($min-value / 100) * (100 - $ar-min-size-percentage)) + $min-value;
+  $value-diff: $max-value - $min-value;
+  $value-diff-percent: $value-diff / $ar-number-of-media-queries;
+
+  @media only screen and (min-width : 0px) {
+    #{$property}: $min-value;
+  }
+
+  @for $i from 1 through $ar-number-of-media-queries {
     @media only screen and (min-width : $ar-min-window-size + ($i * $ar-diff-percent)) {
       #{$property}: $min-value + ($i * $value-diff-percent);
     }
