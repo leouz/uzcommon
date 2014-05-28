@@ -10,8 +10,6 @@
   = hidden_field_tag  :id, @setting.id
   = hidden_field_tag  :type, @type
   = hidden_field_tag  :group_key, @group_key
-  -@type = "textarea" if @type == "text"
-  -@type = "text" if @type == "string"
   -@type = "checkbox" if @type == "boolean"
   = bs_input f, :value, @type, { :hint => @setting.hint, :label => @setting.display_name }
   = bs_actions f, admin_settings_group_path(@setting.group.key)

@@ -23,7 +23,7 @@
       %tr       
         %td= s.display_name
         -if s.type == "ImageSetting"
-          %td= bs_display(:image, { :object => s, :field_name => :value })
+          %td= bs_display(:image, { :url => s.value_url, :thumb => s.value_url(:thumb) })
           %td= bs_display(:links, { :edit => admin_edit_setting_path(@group.key, :image, s.key) })
         -elsif s.type == "FileSetting"
           %td
