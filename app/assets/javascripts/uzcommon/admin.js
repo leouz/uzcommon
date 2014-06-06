@@ -2,9 +2,9 @@ jQuery(function() {
   $("a[rel=popover]").popover();
   $(".tooltip").tooltip();
   $("a[rel=tooltip]").tooltip();
-  
-  $(".datetimepicker").datepicker({ dateFormat: "D, dd M yy" });
-  $(".datepicker").datepicker({ dateFormat: "D, dd M yy" });
+
+  $("input.datetimepicker, .input-group.datetimepicker").datetimepicker();  
+  $("input.datepicker, .input-group.datepicker").datetimepicker({ pickTime: false });
 
   $body = $("body");
   $(document).on({
@@ -20,6 +20,10 @@ jQuery(function() {
     $(this).keydown(update);
     $(this).change(update);
     $(this).change();    
+  });
+
+  $('.submit').change(function () {
+     this.form.submit();
   });
 
   $('.sortable').each(function () {
