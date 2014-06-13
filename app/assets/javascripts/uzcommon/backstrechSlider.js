@@ -5,7 +5,8 @@ $(document).ready(function() {
         bulletsSelector: '#bullets',
         descriptionSelector: '#description',
         data: [{ image: "", description: "" }],
-        onImageClick: function (index, data) { }
+        onImageClick: function (index, data) { },
+        onImageChange: function (index, data) { }
       }
 
       this.options = $.extend({}, this.options, options || {});
@@ -28,18 +29,19 @@ $(document).ready(function() {
         options.onImageClick(i, options.data[i]);      
       });
 
-      var refreshBullets = function (index) {        
+      var refresh = function (index) {        
         $bullet = $('.bullet');
         $bullet.removeClass('active');
         $($bullet[index]).addClass('active'); 
         $(options.descriptionSelector).html(options.data[index].description);
+        options.onImageChange(index, options.data[index]);
       }
 
       $(window).on("backstretch.before", function (e, instance, index) {
-        refreshBullets(index);
+        refresh(index);
       });
 
-      refreshBullets(0);
+      refresh(0);
     }
   });
 });
