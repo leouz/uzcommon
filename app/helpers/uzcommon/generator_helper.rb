@@ -6,15 +6,16 @@ module Uzcommon::GeneratorHelper
     initialize_model
     initialize_path if  @params.first && @params.first.start_with?("/")
     initialize_columns_from_params unless @params.empty?               
-    initialize_columns_from_meta if can_constantize
-    
+    # initialize_columns_from_meta if can_constantize
+    debugger
     @columns = @params_columns || @meta_columns    
   end
 
   def initialize_model
     @model_name = @params.first
     @params = @params - [@params.first]
-    @model_name = @model_name.camelize.singularize
+
+    @model_name = @model_name.camelize
   end
 
   def initialize_path
@@ -63,8 +64,8 @@ module Uzcommon::GeneratorHelper
     r
   end
 
-  def initialize_columns_from_params params
-    @params_columns = params.map do |p|       
+  def initialize_columns_from_params 
+    @params_columns = @params.map do |p|       
       split = p.split(":").map{ |i| i.downcase }      
       mapping = get_mapping_by_input split[1]
       mapping = get_mapping_by_type split[1] unless mapping        
@@ -80,7 +81,8 @@ module Uzcommon::GeneratorHelper
     end
   end
 
-  def can_constantize
+  def can_constantize    
+    debugger
     @model = @model_name.constantize rescue false    
   end
 

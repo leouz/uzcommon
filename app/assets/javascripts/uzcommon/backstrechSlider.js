@@ -24,6 +24,14 @@ $(document).ready(function() {
         }));
       });
 
+      $(document).keyup(function (eventObject) {
+        if (eventObject.keyCode == 37) { //left
+          $image.backstretch("prev");
+        } else if (eventObject.keyCode == 39) { //right
+          $image.backstretch("next");
+        }      
+      });
+
       $image.click(function () {
         var i = $image.data("backstretch").index;
         options.onImageClick(i, options.data[i]);      
@@ -42,6 +50,8 @@ $(document).ready(function() {
       });
 
       refresh(0);
+
+
     }
   });
 });
