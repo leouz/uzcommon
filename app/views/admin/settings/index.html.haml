@@ -17,7 +17,11 @@
     - @booleans.each do |s|
       %tr
         %td= s.display_name
-        %td= bs_display(:boolean, { :object => s, :field_name => :value })
+        %td
+          -if s.value
+            %span.glyphicon.glyphicon-ok
+          -else
+            %span.glyphicon.glyphicon-remove        
         %td= bs_display(:links, { :edit => admin_edit_setting_path(@group.key, :boolean, s.key) })
     - @strings.each do |s|
       %tr       

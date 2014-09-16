@@ -6,8 +6,7 @@ module Uzcommon::GeneratorHelper
     initialize_model
     initialize_path if  @params.first && @params.first.start_with?("/")
     initialize_columns_from_params unless @params.empty?               
-    # initialize_columns_from_meta if can_constantize
-    debugger
+    # initialize_columns_from_meta if can_constantize    
     @columns = @params_columns || @meta_columns    
   end
 
@@ -34,8 +33,8 @@ module Uzcommon::GeneratorHelper
       
       { type: "decimal",   input: "currency",  display: "currency"  },
 
-      { type: "float",     input: "number",    display: "number"    },
-      { type: "integer",   input: "number",    display: "number"    },
+      # { type: "float",     input: "number",    display: "number"    },
+      { type: "integer",   input: "integer",    display: "number"    },
 
       { type: "string",    input: "string",    display: "string"    },
       { type: "string",    input: "permalink", display: "link"      },
@@ -45,7 +44,9 @@ module Uzcommon::GeneratorHelper
       { type: "string",    input: "password",  display: nil         },
       
       { type: "text",      input: "text",      display: "text"      },
-      { type: "text",      input: "wysi",      display: "wysi"      }
+      { type: "text",      input: "wysi",      display: "wysi"      },
+      { type: "string",    input: "select",    display: "string"    },
+      { type: "string",    input: "radio",    display: "string"    }
     ]
 
   def get_mapping_by_type type
