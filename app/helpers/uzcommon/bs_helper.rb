@@ -1,5 +1,5 @@
 module Uzcommon::BsHelper 
-  def bs_input f, field_name, type=:text, options={}
+  def bs_input f, field_name, type=:string, options={}
     render :partial => "fields/input/#{type}", :locals => { :f => f, :field_name => field_name, :options => options }    
   end
 

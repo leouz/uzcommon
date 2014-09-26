@@ -1,3 +1,3 @@
 module Uzcommon
-  VERSION = "0.2.ohm"
+  VERSION = "0.3.ferry"
 end

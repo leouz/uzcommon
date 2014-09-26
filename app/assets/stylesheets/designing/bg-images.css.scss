@@ -2,7 +2,7 @@
   background-image: image-url($url);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: $width $height;    
+  background-size: contain;    
   width: $width;
   height: $height;
 }
