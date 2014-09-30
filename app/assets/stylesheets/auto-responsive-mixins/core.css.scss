@@ -24,15 +24,17 @@ $ar-diff-percent: $ar-diff / $ar-number-of-media-queries;
   }
 }
 
-@mixin ar-plus($property, $min-value) {
+@mixin ar-plus($property, $min-value, $declare-min-value:true) {
 
   $max-value: (($min-value / 100) * (100 - $ar-min-size-percentage)) + $min-value;
   $value-diff: $max-value - $min-value;
   $value-diff-percent: $value-diff / $ar-number-of-media-queries;
 
-  @media only screen and (min-width : 0px) {
-    #{$property}: $min-value;
-  }
+  @if $declare-min-value { #{$property}: $min-value; }
+
+  // @media only screen and (min-width: $ar-min-window-size) {
+  //   #{$property}: $min-value;
+  // }
 
   @for $i from 1 through $ar-number-of-media-queries {
     @media only screen and (min-width : $ar-min-window-size + ($i * $ar-diff-percent)) {
