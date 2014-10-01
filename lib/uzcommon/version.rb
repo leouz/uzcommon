@@ -1,3 +1,3 @@
 module Uzcommon
-  VERSION = "0.4.ferry"
+  VERSION = "0.5.ferry"
 end

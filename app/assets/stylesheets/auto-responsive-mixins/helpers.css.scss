@@ -16,7 +16,6 @@
   @include ar(height, $h);
 }
 
-
 @mixin ar-image($url) {  
   @include ar-image-base($url, image-width($url), image-height($url));
 }

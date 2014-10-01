@@ -4,23 +4,20 @@
   }
 }
 
-
 @mixin break-min-p($min-width, $property, $value) {
   @media only screen and (min-width : $min-width) {
     #{$property}: $value;
   }
 }
 
-
 @mixin ar-break-min($from-min-width, $to-min-width, $number-of-media-queries, $property, $from-value, $to-value) {
   $value-diff: ($from-value - $to-value) / $number-of-media-queries;
   $width-diff: ($from-min-width - $to-min-width) / $number-of-media-queries;
 
-  @for $i from 1 through $number-of-media-queries {
-    @media only screen and (min-width : $from-min-width - ($i * $width-diff)) {
-      #{$property}: $from-value - ($i * $value-diff);
+  @while $number-of-media-queries > 0 {
+    @media only screen and (min-width : $from-min-width - ($number-of-media-queries * $width-diff)) {
+      #{$property}: $from-value - ($number-of-media-queries * $value-diff);
     }
+    $number-of-media-queries: $number-of-media-queries - 1;
   }
 }
-
-
