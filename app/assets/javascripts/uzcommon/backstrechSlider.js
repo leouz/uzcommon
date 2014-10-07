@@ -5,6 +5,7 @@ $(document).ready(function() {
         bulletsSelector: '#bullets',
         descriptionSelector: '#description',
         data: [{ image: "", description: "" }],
+        fade: 2000,
         onImageClick: function (index, data) { },
         onImageChange: function (index, data) { }
       }
@@ -16,8 +17,9 @@ $(document).ready(function() {
       var $description = $(this.options.imageSelector);
 
       var images = _.map(this.options.data, function(i) { return i.image; });
-      $image.backstretch(images, { duration: 6000, fade: 2000 });
+      $image.backstretch(images, { duration: 6000, fade: this.options.fade });
       
+      $bullets.empty()
       $.each(images, function (i, e) {          
         $bullets.append($('<div class="bullet" index="' + i + '">').click(function () {
           $image.backstretch("show", parseInt($(this).attr('index')));          
