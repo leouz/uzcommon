@@ -4,6 +4,12 @@
   }
 }
 
+@mixin break-max($w) {
+  @media only screen and (max-width : $w) {
+    @content;
+  }
+}
+
 @mixin break-min-p($min-width, $property, $value) {
   @media only screen and (min-width : $min-width) {
     #{$property}: $value;
@@ -16,6 +22,19 @@
 
   @while $number-of-media-queries > 0 {
     @media only screen and (min-width : $from-min-width - ($number-of-media-queries * $width-diff)) {
+      #{$property}: $from-value - ($number-of-media-queries * $value-diff);
+    }
+    $number-of-media-queries: $number-of-media-queries - 1;
+  }
+}
+
+
+@mixin ar-break-max($from-max-width, $to-max-width, $number-of-media-queries, $property, $from-value, $to-value) {
+  $value-diff: ($from-value - $to-value) / $number-of-media-queries;
+  $width-diff: ($from-max-width - $to-max-width) / $number-of-media-queries;
+
+  @while $number-of-media-queries >= 0 {
+    @media only screen and (max-width : $from-max-width - ($number-of-media-queries * $width-diff)) {
       #{$property}: $from-value - ($number-of-media-queries * $value-diff);
     }
     $number-of-media-queries: $number-of-media-queries - 1;
