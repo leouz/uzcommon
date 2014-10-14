@@ -42,18 +42,16 @@ $(document).ready(function() {
       var refresh = function (index) {        
         $bullet = $('.bullet');
         $bullet.removeClass('active');
-        $($bullet[index]).addClass('active'); 
-        $(options.descriptionSelector).html(options.data[index].description);
+        $($bullet[index]).addClass('active');        
+        $(options.descriptionSelector).html(options.data[index].description);        
         options.onImageChange(index, options.data[index]);
       }
 
-      $(window).on("backstretch.before", function (e, instance, index) {
-        refresh(index);
+      $(window).on("backstretch.before", function (e, instance, index) {        
+        refresh(index);        
       });
 
       refresh(0);
-
-
     }
   });
 });
