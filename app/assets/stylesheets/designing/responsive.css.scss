@@ -28,7 +28,6 @@
   }
 }
 
-
 @mixin ar-break-max($from-max-width, $to-max-width, $number-of-media-queries, $property, $from-value, $to-value) {
   $value-diff: ($from-value - $to-value) / $number-of-media-queries;
   $width-diff: ($from-max-width - $to-max-width) / $number-of-media-queries;
@@ -39,4 +38,25 @@
     }
     $number-of-media-queries: $number-of-media-queries - 1;
   }
+}
+
+@mixin retina-ratio {
+  @media (-webkit-min-device-pixel-ratio: 2), 
+    (-o-min-device-pixel-ratio: 3/2), 
+    (min--moz-device-pixel-ratio: 2), 
+    (min-device-pixel-ratio: 2), 
+    (min-resolution: 144dppx) {
+        @content;
+    }
+}
+
+@mixin retina-ratio-or-break-min($break-min) {
+  @media (-webkit-min-device-pixel-ratio: 2), 
+    (-o-min-device-pixel-ratio: 3/2), 
+    (min--moz-device-pixel-ratio: 2), 
+    (min-device-pixel-ratio: 2), 
+    (min-resolution: 144dppx),
+    only screen and (min-width : $break-min) {
+        @content;
+    }
 }

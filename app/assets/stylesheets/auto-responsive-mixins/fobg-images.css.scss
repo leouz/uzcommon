@@ -1,0 +1,8 @@
+@mixin ar-plus-fogb-image($url, $inline:false, $break-2x:1300px) {
+  @include fobg-image-base($url, $inline, $break-2x);  
+  background-repeat: no-repeat;
+  background-position: center;  
+  background-size: contain;
+  @include ar-plus(width, image-width('1x/' + $url));  
+  @include ar-plus(height, image-height('1x/' + $url));
+}

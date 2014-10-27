@@ -1,0 +1,28 @@
+@mixin ar-plus-image-base($url, $w, $h) {
+  background-image: image-url($url);
+  background-repeat: no-repeat;
+  background-position: center;  
+  background-size: cover;  
+  @include ar-plus(width, $w);  
+  @include ar-plus(height, $h);
+}
+
+@mixin ar-image-base($url, $w, $h) {
+  background-image: image-url($url);
+  background-repeat: no-repeat;
+  background-position: center;  
+  background-size: cover;  
+  @include ar(width, $w);  
+  @include ar(height, $h);
+}
+
+@mixin ar-image($url) {  
+  @include ar-image-base($url, image-width($url), image-height($url));
+}
+
+@mixin ar-bg-image-absolute-horizontal-center($url) {
+  @include ar-image($url);    
+  @include ar(margin-left, -(image-width($url)/2));
+  position: absolute;
+  left: 50%;
+}

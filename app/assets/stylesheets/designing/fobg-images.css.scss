@@ -1,0 +1,54 @@
+@mixin fobg-image-base($url, $inline:false, $break-2x:1300px) {
+  @if $inline {
+    background-image: inline-image('1x/' + $url);
+  } @else {      
+    background-image: image-url('1x/' + $url);
+  }
+
+  @include retina-ratio-or-break-min($break-2x) {
+    @if $inline {
+      background-image: inline-image('2x/' + $url);
+    } @else {      
+      background-image: image-url('2x/' + $url);
+    }
+  }
+}
+
+@mixin fobg-inline-image($url) {
+  @include fobg-image-base($url, true);
+}
+
+@mixin fobg-image($url) {
+  @include fobg-image-base($url);
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  width: image-width('1x/' + $url);
+  height: image-height('1x/' + $url);
+}
+
+@mixin fobg-image-absolute-horizontal-center($url) {
+  @include fobg-image($url);  
+  left: 50%;
+  margin-left: -(image-width('1x/' + $url)/2);
+  position: absolute;
+}
+
+@mixin fobg-image-absolute-vertical-center($url) {
+  @include fobg-image($url);  
+  top: 50%;
+  margin-top: -(image-height('1x/' + $url)/2);
+  position: absolute;
+}
+
+@mixin fobg-image-absolute-center($url) {
+  @include fobg-image($url);  
+  top: 50%;
+  margin-top: -(image-height('1x/' + $url)/2);
+  left: 50%;
+  margin-left: -(image-width('1x/' + $url)/2);
+  position: absolute;
+}
+
