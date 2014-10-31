@@ -1,0 +1,5 @@
+= form_for [:admin, @model], url:  @url, html: { :class => 'form-horizontal' } do |f|
+  -@meta.form_fields.each do |mf|
+    = bs_input f, mf.name, mf.type, mf.options  
+  = bs_actions f, admin_uzadmin_index_path(@meta.symbol)
+  

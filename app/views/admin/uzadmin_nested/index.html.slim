@@ -1,0 +1,30 @@
+.page-header
+  h1: a href="#{admin_uzadmin_index_url(@base_meta.base_path)}"= @base_meta.humanized_name_plural
+  .row: .col-md-12: ol.breadcrumb    
+    li: a href="#{admin_uzadmin_edit_path(@base_meta.base_path, @base_instance.id)}"= @base_instance.send(@relationship.title_field)
+    li= @meta.humanized_name_plural
+.row
+  .col-md-12
+    = link_to "New #{@meta.humanized_name}", admin_uzadmin_nested_new_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path), :class => 'btn btn-primary'
+table.table.table-striped
+  thead
+    tr
+      -if @meta.sort == :sort
+        th
+      -@meta.index_fields.each do |f|
+        = bs_table_header f.title
+      th
+  tbody class="#{'sortable' if @meta.sort == :sort}" data-url="#{admin_uzadmin_nested_sort_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path)}"
+    - @collection.each do |m|
+      tr id="#{@meta.symbol}_#{m.id}"
+        -if @meta.sort == :sort
+          td
+            span.glyphicon.glyphicon-sort.drag
+        -@meta.index_fields.each do |f|
+          -if f.type == :image
+            td= bs_display(f.type, { url: m.send(f.name.to_s + '_url'), thumb: m.send(f.name.to_s + '_url', :thumb)})
+          -else
+            td= bs_display(f.type, m.send(f.name))
+        td.links                  
+          = link_to "Edit", admin_uzadmin_nested_edit_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path, m), :class => 'btn btn-primary'
+          = link_to "Delete", admin_uzadmin_nested_destroy_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path, m.id), :method => :delete, :data => { :confirm => "Are you sure?" }, :class => 'btn btn-danger'

@@ -9,6 +9,7 @@ module Uzcommon::BsHelper
   
   def bs_display  type, value, options=nil
     type = :string if type == :email
+    type = :string if type == :select
     render :partial => "fields/display/#{type}", :locals => { :value => value, :options => options }
   end
 
