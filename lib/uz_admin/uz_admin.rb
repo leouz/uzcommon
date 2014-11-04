@@ -1,7 +1,7 @@
 class UzAdmin
   attr_accessor :name, :humanized_name, :humanized_name_plural, :symbol, :class
   attr_accessor :fields, :relationships
-  attr_accessor :sort, :base_path, :index_fields
+  attr_accessor :sort, :base_path, :index_fields, :populate_batch_count
 
   def initialize(hash)
     @class = hash[:class]
@@ -26,7 +26,10 @@ class UzAdmin
     @index_fields = @fields.select{ |f| hash[:index_fields].include?(f.name) }  if hash[:index_fields]
 
     @can = [:create, :edit, :delete]
-    @can = hash[:can] if hash[:can]    
+    @can = hash[:can] if hash[:can]
+
+    @populate_batch_count = 10
+    @populate_batch_count = hash[:populate_batch_count] if hash[:populate_batch_count]
   end
 
   def can action

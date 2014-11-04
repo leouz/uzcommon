@@ -114,7 +114,13 @@ namespace :db do
     end
 
     def populate_batch(meta, parent=nil)
-      batch = 5
+      if meta.populate_batch_count.is_a?(Range)
+        a = meta.populate_batch_count.to_a
+        batch = rand_int(a.first, a.last)
+      else
+        batch = meta.populate_batch_count
+      end
+      
       print "\n#{meta.name} batch #{batch}"      
       meta.class.destroy_all if parent == nil
       (1..batch).each do
