@@ -2,7 +2,14 @@ class Admin::UzadminNestedController < AdminControllerBase
   before_filter :uzadmin_initialize
 
   def index    
-    @collection = @relationship_collection.order(@meta.sort)
+    if @custom_page.nil?      
+      @collection = @relationship_collection.order(@meta.sort)            
+      render "image_upload" if @relationship.view_type == :images
+    else      
+      @meta = @base_meta
+      @instance = @base_instance
+      render template: "admin/#{@meta.base_path}/#{@custom_page.template}", layout: @custom_page.layout
+    end
   end
 
   def new
@@ -60,11 +67,16 @@ class Admin::UzadminNestedController < AdminControllerBase
   private
 
   def uzadmin_initialize    
-    @base_meta = UzAdmin.find params[:base_path]
+    @base_meta = UzAdmin::Helpers.find params[:base_path]
     @base_instance = @base_meta.class.find params[:base_id]
-    @relationship = @base_meta.find_relationship params[:nested_path]   
-    @meta = @relationship.meta
-    @relationship_collection = @base_instance.send(@relationship.field)
+
+    @custom_page = @base_meta.find_custom_page params[:nested_path]
+
+    if @custom_page.nil?
+      @relationship = @base_meta.find_relationship params[:nested_path]
+      @meta = @relationship.meta
+      @relationship_collection = @base_instance.send(@relationship.field)
+    end
   end
 
   def index_url

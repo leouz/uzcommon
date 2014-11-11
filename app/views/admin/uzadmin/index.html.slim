@@ -3,7 +3,7 @@
 .row
   .col-md-12
     -if @meta.can :create
-      = link_to "New #{@meta.humanized_name}", admin_uzadmin_new_path(@meta.base_path), :class => 'btn btn-primary'
+      = link_to "New #{@meta.humanized_name}", admin_uzadmin_new_path(@meta.base_path), class: 'btn btn-primary'
 table.table.table-striped
   thead
     tr
@@ -25,8 +25,13 @@ table.table.table-striped
             td= bs_display(f.type, m.send(f.name))
         td.links                  
           -if @meta.can :edit
-            = link_to "Edit", admin_uzadmin_edit_path(@meta.base_path, m), :class => 'btn btn-primary'
+            = link_to "Edit", admin_uzadmin_edit_path(@meta.base_path, m), class: 'btn btn-primary'
           -if @meta.can :delete
-            = link_to "Delete", admin_uzadmin_destroy_path(@meta.base_path, m.id), :method => :delete, :data => { :confirm => "Are you sure?" }, :class => 'btn btn-danger'
+            = link_to "Delete", admin_uzadmin_destroy_path(@meta.base_path, m.id), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger'
+          
           -@meta.relationships.each do |r|
-            = link_to "#{r.meta.humanized_name_plural} (#{m.send(r.field).count})", admin_uzadmin_nested_index_path(@meta.base_path, m.id, r.nested_path), :class => 'btn btn-primary'
+            = link_to "#{r.humanized_name_plural} (#{m.send(r.field).count})", admin_uzadmin_nested_index_path(@meta.base_path, m.id, r.nested_path), class: 'btn btn-primary'
+
+          -@meta.custom_pages.each do |c|
+            = link_to "#{c.title}", admin_uzadmin_nested_index_path(@meta.base_path, m.id, c.nested_path), class: 'btn btn-primary', target: c.target
+

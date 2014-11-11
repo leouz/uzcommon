@@ -32,6 +32,11 @@ namespace :db do
       a[rand_int(0, a.length)]
     end
 
+    def rand_tag
+      a = %w(aries taurus gemini cancer leo virgo libra scorpio sagittarius capricorn aquarius pisces)
+      rand_in_array(a)
+    end
+
     def rand_video_link
       links = [ 
         "https://www.youtube.com/watch?v=URtRbt7evEA",
@@ -44,6 +49,20 @@ namespace :db do
         "http://vimeo.com/100357962"
       ]
       rand_in_array(links)
+    end
+
+    def rand_tags(field)
+      result = []
+      if field.populate.values?
+        rand_int(1,5).each do
+          result << rand_in_array(field.populate.values)
+        end
+      else
+        rand_int(1,5).each do
+          result << rand_tag
+        end
+      end
+
     end
 
     def rand_string(type)
@@ -65,7 +84,7 @@ namespace :db do
       when :text
         Faker::Lorem.paragraph(2)
       when :wysi
-        Faker::Lorem.paragraph(2)
+        Faker::Lorem.paragraph(2)        
       else
         Faker::Lorem.sentence(rand_int(1, 3)).titleize.delete('.')
       end
@@ -95,6 +114,8 @@ namespace :db do
         rand_time
       else      
         case field.type        
+        when :tags
+          rand_tags(field)
         when :password
           "test123"
         when :checkbox
@@ -146,7 +167,7 @@ namespace :db do
       print "\n"
     end
 
-    UZADMIN_METAS.each do |meta|          
+    UZADMIN_METAS.each do |meta|              
       populate_batch(meta)      
     end
   end

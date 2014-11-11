@@ -1,7 +1,7 @@
 class Admin::UzadminController < AdminControllerBase  
   before_filter :uzadmin_initialize
 
-  def index    
+  def index
     @collection = @meta.class.order(@meta.sort)
   end
 
@@ -60,6 +60,6 @@ class Admin::UzadminController < AdminControllerBase
   private
 
   def uzadmin_initialize    
-    @meta = UzAdmin.find params[:base_path]   
+    @meta = UzAdmin::Helpers.find params[:base_path]   
   end
 end

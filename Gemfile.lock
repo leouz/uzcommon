@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uzcommon (0.7.ferry)
+    uzcommon (1.0.eat)
       kaminari
       rails (~> 3.2.13)
 
@@ -97,7 +97,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.41)
+    tzinfo (0.3.42)
 
 PLATFORMS
   ruby
