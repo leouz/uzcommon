@@ -1,4 +1,4 @@
-class Admin::UzadminNestedController < AdminControllerBase  
+class Uzcommon::Admin::UzadminNestedController < AdminControllerBase  
   before_filter :uzadmin_initialize
 
   def index    
@@ -14,12 +14,12 @@ class Admin::UzadminNestedController < AdminControllerBase
 
   def new
     @model = @relationship_collection.new
-    @url = admin_uzadmin_nested_create_url(@base_meta.base_path, @base_instance.id, @relationship.nested_path)
+    @url = uzcommon.admin_uzadmin_nested_create_url(@base_meta.base_path, @base_instance.id, @relationship.nested_path)
   end
 
   def edit
     @model = @relationship_collection.find(params[:nested_id])
-    @url = admin_uzadmin_nested_update_url(@base_meta.base_path, @base_instance.id, @relationship.nested_path, params[:nested_id])
+    @url = uzcommon.admin_uzadmin_nested_update_url(@base_meta.base_path, @base_instance.id, @relationship.nested_path, params[:nested_id])
   end
 
   def create
@@ -80,6 +80,6 @@ class Admin::UzadminNestedController < AdminControllerBase
   end
 
   def index_url
-    admin_uzadmin_nested_index_url(@base_meta.base_path, @base_instance.id)
+    uzcommon.admin_uzadmin_nested_index_url(@base_meta.base_path, @base_instance.id)
   end
 end

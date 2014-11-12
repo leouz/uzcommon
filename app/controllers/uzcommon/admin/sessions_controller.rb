@@ -1,8 +1,8 @@
 # -*- encoding : utf-8 -*-
-class Admin::SessionsController < UzcommonControllerBase
+class Uzcommon::Admin::SessionsController < UzcommonControllerBase
   layout 'admin'
   def new        
-    redirect_to admin_settings_group_path if admin?
+    redirect_to uzcommon.admin_settings_group_path if admin?
   end
 
   def create
@@ -10,16 +10,16 @@ class Admin::SessionsController < UzcommonControllerBase
     
     if admin?
       flash[:notice] = "Successfully logged in";
-      redirect_to admin_settings_group_path
+      redirect_to uzcommon.admin_settings_group_path
     else
       flash[:error] = "Wrong password!";
-      redirect_to admin_root_path
+      redirect_to uzcommon.admin_root_path
     end    
   end
   
   def destroy
     reset_session
     flash[:notice] = "Successfully logged out";
-    redirect_to admin_root_path
+    redirect_to uzcommon.admin_root_path
   end
 end

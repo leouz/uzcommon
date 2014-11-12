@@ -1,4 +1,4 @@
-class Admin::UzadminController < AdminControllerBase  
+class Uzcommon::Admin::UzadminController < AdminControllerBase  
   before_filter :uzadmin_initialize
 
   def index
@@ -35,12 +35,12 @@ class Admin::UzadminController < AdminControllerBase
 
   def new    
     @model = @meta.class.new
-    @url = admin_uzadmin_create_url(@meta.base_path)
+    @url = uzcommon.admin_uzadmin_create_url(@meta.base_path)
   end
 
   def edit
     @model = @meta.class.find(params[:id])
-    @url = admin_uzadmin_update_url(@meta.base_path, params[:id])
+    @url = uzcommon.admin_uzadmin_update_url(@meta.base_path, params[:id])
   end
 
   def create    
@@ -48,7 +48,7 @@ class Admin::UzadminController < AdminControllerBase
       @model = @meta.class.new(params[@meta.symbol])
       
       if @model.save
-        redirect_to admin_uzadmin_index_url(@meta.base_path), notice: "#{@meta.humanized_name} was successfully created."
+        redirect_to uzcommon.admin_uzadmin_index_url(@meta.base_path), notice: "#{@meta.humanized_name} was successfully created."
       else
         render action: "new"
       end    
@@ -60,7 +60,7 @@ class Admin::UzadminController < AdminControllerBase
       @model = @meta.class.find(params[:id])
       
       if @model.update_attributes(params[@meta.symbol])
-        redirect_to admin_uzadmin_index_url(@meta.base_path), notice: "#{@meta.humanized_name} was successfully updated."
+        redirect_to uzcommon.admin_uzadmin_index_url(@meta.base_path), notice: "#{@meta.humanized_name} was successfully updated."
       else
         render action: "edit"
       end
@@ -72,7 +72,7 @@ class Admin::UzadminController < AdminControllerBase
       @model = @meta.class.find(params[:id])
       @model.destroy
       
-      redirect_to admin_uzadmin_index_url(@meta.base_path)    
+      redirect_to uzcommon.admin_uzadmin_index_url(@meta.base_path)    
     end
   end
 

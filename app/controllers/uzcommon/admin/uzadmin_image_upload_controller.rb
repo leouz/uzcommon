@@ -1,4 +1,4 @@
-class Admin::UzadminImageUploadController < AdminControllerBase
+class Uzcommon::Admin::UzadminImageUploadController < AdminControllerBase
   before_filter :uzadmin_initialize
 
   def all
@@ -35,6 +35,6 @@ class Admin::UzadminImageUploadController < AdminControllerBase
   end
 
   def index_url
-    admin_uzadmin_nested_index_url(@base_meta.base_path, @base_instance.id)
+    uzcommon.admin_uzadmin_nested_index_url(@base_meta.base_path, @base_instance.id)
   end
 end

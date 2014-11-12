@@ -6,7 +6,7 @@ class AdminControllerBase < UzcommonControllerBase
   def require_login
     unless admin?
       flash[:error] = "You must be logged in to access this section"
-      redirect_to admin_login_path
+      redirect_to uzcommon.admin_login_path
     end
   end
 end

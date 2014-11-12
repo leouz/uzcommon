@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-class Admin::AssetsController < AdminControllerBase
+class Uzcommon::Admin::AssetsController < AdminControllerBase
   def index    
   end
 

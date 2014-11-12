@@ -1,40 +1,40 @@
 # -*- encoding : utf-8 -*-
 Uzcommon::Engine.routes.draw do
-  # get "errors/error_404"
-  # get "errors/error_500"
+  match '/admin' => 'Admin::sessions#new', as: :admin
+  namespace :admin do
+    root :to => 'sessions#new'
 
-  # root :to => 'home#index'
-    
-  # match '/admin' => 'Admin::sessions#new', :as => :admin
-  # namespace :admin do    
-  #   root :to => 'sessions#new'
+    match 'login' => 'sessions#create', as: :login
+    match 'logout' => 'sessions#destroy', as: :logout
 
-  #   match 'login' => 'sessions#create', :as => :login
-  #   match 'logout' => 'sessions#destroy', :as => :logout
+    match 'settings-group(/:key)' => 'settings#index', as: :settings_group
+    match 'edit-setting/:group_key/:type/:key' => 'settings#edit', as: :edit_setting
+    put 'update-setting' => 'settings#update', as: :update_setting
 
-  #   match 'settings-group(/:key)' => 'settings#index', :as => :settings_group
-  #   match 'edit-setting/:group_key/:type/:key' => 'settings#edit', :as => :edit_setting
-  #   put 'update-setting' => 'settings#update', :as => :update_setting
+    post '/assets/summernote-upload' => 'assets#summernote_upload'
+    post '/assets/destroy' => 'assets#destroy', :as => :assets_destroy
+    get '/assets/get(/:group)' => 'assets#get', :as => :assets_get
 
-  #   post '/assets/summernote-upload' => 'assets#summernote_upload'
-  #   post '/assets/destroy' => 'assets#destroy', :as => :assets_destroy
-  #   get '/assets/get(/:group)' => 'assets#get', :as => :assets_get
+    resources :assets, :only => [:index, :create]
 
-  #   resources :assets, :only => [:index, :create] do
-  #   end
-  #   resources :posts, :except => :show
-  #   resources :events, :except => :show
-  #   resources :artists, :except => :show 
-  # end
-  
+    get     ':base_path/new'      => 'uzadmin#new',     as: :uzadmin_new
+    post    ':base_path'          => 'uzadmin#create',  as: :uzadmin_create
+    put     ':base_path/:id'      => 'uzadmin#update',  as: :uzadmin_update
+    get     ':base_path'          => 'uzadmin#index',   as: :uzadmin_index
+    get     ':base_path/:id/edit' => 'uzadmin#edit',    as: :uzadmin_edit        
+    delete  ':base_path/:id'      => 'uzadmin#destroy', as: :uzadmin_destroy
+    post    ':base_path/sort'     => 'uzadmin#sort',    as: :uzadmin_sort
 
-  # match '/about-us' => "home#about_us", :as => :home_about_us
-  # match '/management' => "home#management", :as => :home_management
-  # match '/marketing' => "home#marketing", :as => :home_marketing
-  # match '/events' => "home#events", :as => :home_events  
-  # match '/contact' => "home#contact", :as => :home_contact
-  # match '/events/:permalink' => "home#event_detail", :as => :home_event_detail
-  # match '/posts/:permalink' => "home#post", :as => :home_post
-  # match '/posts/tag/:tag' => "home#tag", :as => :home_tag
-  # match '/artist/:permalink' => "home#artist", :as => :home_artist
+    get     ':base_path/:base_id/:nested_path/new'             => 'uzadmin_nested#new',     as: :uzadmin_nested_new
+    post    ':base_path/:base_id/:nested_path'                 => 'uzadmin_nested#create',  as: :uzadmin_nested_create
+    put     ':base_path/:base_id/:nested_path/:nested_id'      => 'uzadmin_nested#update',  as: :uzadmin_nested_update
+    get     ':base_path/:base_id/:nested_path'                 => 'uzadmin_nested#index',   as: :uzadmin_nested_index
+    get     ':base_path/:base_id/:nested_path/:nested_id/edit' => 'uzadmin_nested#edit',    as: :uzadmin_nested_edit        
+    delete  ':base_path/:base_id/:nested_path/:nested_id'      => 'uzadmin_nested#destroy', as: :uzadmin_nested_destroy
+    post    ':base_path/:base_id/:nested_path/sort'            => 'uzadmin_nested#sort',    as: :uzadmin_nested_sort       
+
+    get     ':base_path/:base_id/:nested_path/images/all'      => 'uzadmin_image_upload#all',      as: :uzadmin_nested_images_all
+    post    ':base_path/:base_id/:nested_path/images/create'   => 'uzadmin_image_upload#create',   as: :uzadmin_nested_images_create
+    post    ':base_path/:base_id/:nested_path/images/destroy'  => 'uzadmin_image_upload#destroy',  as: :uzadmin_nested_images_destroy
+  end
 end

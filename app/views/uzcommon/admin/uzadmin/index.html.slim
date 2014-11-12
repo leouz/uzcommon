@@ -4,7 +4,7 @@
       h1= @meta.humanized_name_plural
     .col-md-4.header-buttons
       -if @meta.can :create
-        = link_to "New #{@meta.humanized_name}", admin_uzadmin_new_path(@meta.base_path), class: 'btn btn-primary'
+        = link_to "New #{@meta.humanized_name}", uzcommon.admin_uzadmin_new_path(@meta.base_path), class: 'btn btn-primary'
 
 
 -if @meta.filters.any?
@@ -13,7 +13,7 @@
       .panel.panel-info
         .panel-heading Filters      
         .panel-body
-          = form_tag admin_uzadmin_index_path(@meta.base_path), :method => 'get' do
+          = form_tag uzcommon.admin_uzadmin_index_path(@meta.base_path), :method => 'get' do
             -@meta.filters.each do |f|
               =bs_filter f.type, f.field, @filter_options[f.field]
 
@@ -26,7 +26,7 @@ table.table.table-striped
       -@meta.index_fields.each do |f|
         = bs_table_header f.title
       th
-  tbody class="#{'sortable' if @meta.sort == :sort}" data-url="#{admin_uzadmin_sort_path(@meta.base_path)}"
+  tbody class="#{'sortable' if @meta.sort == :sort}" data-url="#{uzcommon.admin_uzadmin_sort_path(@meta.base_path)}"
     - @collection.each do |m|
       tr id="#{@meta.symbol}_#{m.id}"
         -if @meta.sort == :sort
@@ -39,13 +39,13 @@ table.table.table-striped
             td= bs_display(f.type, m.send(f.name))
         td.links                  
           -if @meta.can :edit
-            = link_to "Edit", admin_uzadmin_edit_path(@meta.base_path, m), class: 'btn btn-primary'
+            = link_to "Edit", uzcommon.admin_uzadmin_edit_path(@meta.base_path, m), class: 'btn btn-primary'
           -if @meta.can :delete
-            = link_to "Delete", admin_uzadmin_destroy_path(@meta.base_path, m.id), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger'
+            = link_to "Delete", uzcommon.admin_uzadmin_destroy_path(@meta.base_path, m.id), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger'
           
           -@meta.relationships.each do |r|
-            = link_to "#{r.humanized_name_plural} (#{m.send(r.field).count})", admin_uzadmin_nested_index_path(@meta.base_path, m.id, r.nested_path), class: 'btn btn-primary'
+            = link_to "#{r.humanized_name_plural} (#{m.send(r.field).count})", uzcommon.admin_uzadmin_nested_index_path(@meta.base_path, m.id, r.nested_path), class: 'btn btn-primary'
 
           -@meta.custom_pages.each do |c|
-            = link_to "#{c.title}", admin_uzadmin_nested_index_path(@meta.base_path, m.id, c.nested_path), class: 'btn btn-primary', target: c.target
+            = link_to "#{c.title}", uzcommon.admin_uzadmin_nested_index_path(@meta.base_path, m.id, c.nested_path), class: 'btn btn-primary', target: c.target
 

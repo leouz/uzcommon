@@ -1,0 +1,11 @@
+.page-header
+  h1: a href="#{uzcommon.admin_uzadmin_index_url(@base_meta.base_path)}"= @base_meta.humanized_name_plural
+  .row: .col-md-12: ol.breadcrumb    
+    li: a href="#{uzcommon.admin_uzadmin_edit_path(@base_meta.base_path, @base_instance.id)}"= @base_instance.send(@base_meta.title_field)
+    li= @meta.humanized_name_plural
+
+-all_path = uzcommon.admin_uzadmin_nested_images_all_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path)
+-destroy_path = uzcommon.admin_uzadmin_nested_images_create_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path)
+-create_path = uzcommon.admin_uzadmin_nested_images_destroy_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path)
+
+=bs_multiple_image_uploader "params[#{@meta.symbol}][image]", all_path, create_path, destroy_path

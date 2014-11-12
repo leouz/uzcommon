@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-class Admin::SettingsController < AdminControllerBase
+class Uzcommon::Admin::SettingsController < AdminControllerBase
   def index
     key = params[:key] ? params[:key] : SettingGroup.first.key
     @group = SettingGroup.find_by_key key
@@ -21,7 +21,7 @@ class Admin::SettingsController < AdminControllerBase
       if setting.update_attributes(params["#{params[:type]}_setting"])
         setting.has_user_changed = true
         setting.save!
-        format.html { redirect_to admin_settings_group_path(params[:group_key]), notice: 'Setting was successfully updated.' }
+        format.html { redirect_to uzcommon.admin_settings_group_path(params[:group_key]), notice: 'Setting was successfully updated.' }
       else
         format.html { render action: :edit }
       end
