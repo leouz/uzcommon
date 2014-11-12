@@ -8,7 +8,7 @@ module Uzcommon::BsHelper
     render :partial => "fields/actions", :locals => { :f => f, :back_path => back_path }
   end
   
-  def bs_display  type, value, options=nil
+  def bs_display type, value, options=nil
     type = :string if type == :email
     type = :string if type == :select
     type = :string if type == :permalink
@@ -27,5 +27,9 @@ module Uzcommon::BsHelper
 
   def bs_multiple_image_uploader name, all_url, destroy_url, upload_url
     render :partial => "fields/image_uploader", :locals => { name: name, multiple: true, all_url: all_url, destroy_url: destroy_url, upload_url: upload_url }
+  end
+
+  def bs_filter type, field_name, options
+    render :partial => "fields/filters/#{type}", :locals => { :options => options, :field_name => field_name }
   end
 end

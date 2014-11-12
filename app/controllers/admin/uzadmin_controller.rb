@@ -2,7 +2,35 @@ class Admin::UzadminController < AdminControllerBase
   before_filter :uzadmin_initialize
 
   def index
-    @collection = @meta.class.order(@meta.sort)
+    @collection = @meta.class
+    @filter_options = {}
+
+    if @meta.filters.any?
+      @meta.filters.each do |f|
+        if f.type == :monthly
+          @filter_options[f.field], @collection = apply_monthly_filter @collection, f
+        end
+      end
+    else
+      @collection = @meta.class.all
+    end
+
+    @collection = @collection.order(@meta.sort)
+  end
+
+  def apply_monthly_filter collection, filter    
+    if params[filter.field] and params[filter.field][:year] and params[filter.field][:month]
+      year, month = params[filter.field][:year].to_i, params[filter.field][:month].to_i
+    else
+      year, month = Time.zone.today.year, Time.zone.today.month
+    end
+
+    options = { current: Time.zone.local(year, month, 1).at_beginning_of_month }
+    
+    range = options[:current]..options[:current].at_end_of_month    
+    collection = collection.where(filter.field => range)
+    
+    [options, collection]
   end
 
   def new    

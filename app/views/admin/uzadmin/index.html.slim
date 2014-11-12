@@ -1,9 +1,23 @@
 .page-header
-  h1= @meta.humanized_name_plural
-.row
-  .col-md-12
-    -if @meta.can :create
-      = link_to "New #{@meta.humanized_name}", admin_uzadmin_new_path(@meta.base_path), class: 'btn btn-primary'
+  .row
+    .col-md-8
+      h1= @meta.humanized_name_plural
+    .col-md-4.header-buttons
+      -if @meta.can :create
+        = link_to "New #{@meta.humanized_name}", admin_uzadmin_new_path(@meta.base_path), class: 'btn btn-primary'
+
+
+-if @meta.filters.any?
+  .row.search-row.filters
+    .col-md-12
+      .panel.panel-info
+        .panel-heading Filters      
+        .panel-body
+          = form_tag admin_uzadmin_index_path(@meta.base_path), :method => 'get' do
+            -@meta.filters.each do |f|
+              =bs_filter f.type, f.field, @filter_options[f.field]
+
+
 table.table.table-striped
   thead
     tr

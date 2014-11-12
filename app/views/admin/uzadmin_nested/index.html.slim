@@ -1,11 +1,12 @@
 .page-header
-  h1: a href="#{admin_uzadmin_index_url(@base_meta.base_path)}"= @base_meta.humanized_name_plural
+  .row
+    .col-md-8
+      h1: a href="#{admin_uzadmin_index_url(@base_meta.base_path)}"= @base_meta.humanized_name_plural
+    .col-md-4.header-buttons
+      = link_to "New #{@meta.humanized_name}", admin_uzadmin_nested_new_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path), :class => 'btn btn-primary'
   .row: .col-md-12: ol.breadcrumb    
     li: a href="#{admin_uzadmin_edit_path(@base_meta.base_path, @base_instance.id)}"= @base_instance.send(@base_meta.title_field)
     li= @meta.humanized_name_plural
-.row
-  .col-md-12
-    = link_to "New #{@meta.humanized_name}", admin_uzadmin_nested_new_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path), :class => 'btn btn-primary'
 table.table.table-striped
   thead
     tr

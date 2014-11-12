@@ -65,12 +65,32 @@ li.nav-header {
   float: right;
 }
 
-.search-row {
-  margin-bottom: 8px;
+.header-buttons {
+  text-align: right;
+  a {
+    margin-top: 20px;
+  }
 }
+
+.page-header {
+  padding-bottom: 0px;
+}
+
+.filters {
+  label {
+    margin-top: 6px;
+  }
+}
+// .search-row {
+  // margin-bottom: 8px;
+// }
 
 td.links {
   width: 140px;
+  .btn {
+    margin-right: 3px;
+    margin-bottom: 3px;
+  }
 }
 
 .rotate-90 {

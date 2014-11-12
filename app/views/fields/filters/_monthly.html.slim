@@ -1,0 +1,7 @@
+.row
+  .col-md-2
+    label=field_name.to_s.humanize
+  .col-md-5
+    = select_month options[:current], { field_name: "month", :prefix => "#{field_name}" }, { :class => 'form-control submit' }        
+  .col-md-5
+    = select_year options[:current], { field_name: "year", :prefix => "#{field_name}" }, { :class => 'form-control submit' }

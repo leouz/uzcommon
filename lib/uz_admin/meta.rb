@@ -1,7 +1,7 @@
 module UzAdmin
   class Meta
     attr_accessor :name, :humanized_name, :humanized_name_plural, :symbol, :class
-    attr_accessor :fields, :relationships, :custom_pages
+    attr_accessor :fields, :relationships, :custom_pages, :filters
     attr_accessor :sort, :base_path, :index_fields, :populate_batch_count, :title_field
 
     def initialize(hash)
@@ -16,6 +16,10 @@ module UzAdmin
 
       @relationships = []    
       hash[:relationships].each{ |f| @relationships << Relationship.new(f) } if hash[:relationships] != nil
+
+      @filters = []    
+      hash[:filters].each{ |f| @filters << Filter.new(f) } if hash[:filters] != nil
+
 
       @sort = 'created_at DESC'
       @sort = hash[:sort] if hash[:sort]
@@ -116,6 +120,15 @@ module UzAdmin
         @nested_path = @template.to_s
         @nested_path = hash[:nested_path].to_s if hash[:nested_path]        
       end      
+    end
+
+    class Filter
+      attr_accessor :field, :type
+      def initialize(hash)      
+        @hash = hash
+        @field = hash[:field]
+        @type = hash[:type]      
+      end
     end
   end
 end
