@@ -1,3 +1,3 @@
 module Uzcommon
-  VERSION = "1.1.eat"
+  VERSION = "1.2.sinners"
 end
