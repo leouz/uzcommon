@@ -62,6 +62,10 @@
   cursor: pointer
 }
 
+.opacity-hover:hover {
+  @include opacity(0.9);
+}
+
 .clearfix:after {
    content: " "; /* Older browser do not support empty content */
    visibility: hidden;

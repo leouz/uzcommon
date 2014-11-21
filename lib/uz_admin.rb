@@ -17,16 +17,16 @@ module UzAdmin
         @@meta[self.name] = m
 
         m.fields.each do |f|
-          attr_accessible f.name
-          mount_uploader(f.name, "#{m.name}#{f.name.to_s.camelize}Uploader".constantize) if f.type == :image
+          m.class.attr_accessible f.name
+          m.class.mount_uploader(f.name, "#{m.name}#{f.name.to_s.camelize}Uploader".constantize) if f.type == :image
         end
 
         m.relationships.each do |r|
           if r.type == :has_many
-            has_many r.field, :dependent => :destroy  
-            accepts_nested_attributes_for r.field, :allow_destroy => true
+            m.class.has_many r.field, :dependent => :destroy  
+            m.class.accepts_nested_attributes_for r.field, :allow_destroy => true
           end
-          belongs_to r.field if r.type == :belongs_to      
+          m.class.belongs_to r.field if r.type == :belongs_to      
         end
       end
     end
