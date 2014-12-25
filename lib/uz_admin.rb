@@ -6,7 +6,7 @@ module UzAdmin
   extend ActiveSupport::Concern 
 
   module ActiveRecord
-    def uz_admin(hash)    
+    def uz_admin hash
       @@meta ||= {}
             
       if @@meta[self.name].nil?        
