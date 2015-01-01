@@ -1,4 +1,4 @@
--UZADMIN_METAS.each do |meta|  
+-UZ_ADMIN.each do |meta|  
   li
     a class="#{'active' if action?(uzcommon.admin_uzadmin_index_url(meta.base_path))}" href="#{uzcommon.admin_uzadmin_index_url(meta.base_path)}"
       = "#{meta.humanized_name_plural} (#{meta.class.all.count})"

@@ -12,7 +12,8 @@ module Uzcommon::BsHelper
     type = :string if type == :email
     type = :string if type == :select
     type = :string if type == :permalink
-    type = :boolean if type == :checkbox    
+    type = :boolean if type == :checkbox
+    value = "" if value == nil
     render :partial => "fields/display/#{type}", :locals => { :value => value, :options => options }
   end
 

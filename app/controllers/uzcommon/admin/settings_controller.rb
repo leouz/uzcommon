@@ -11,11 +11,11 @@ class Uzcommon::Admin::SettingsController < AdminControllerBase
   def edit    
     @type = params[:type]
     @group_key = params[:group_key]
-    @setting = SettingGroup.find_by_key(@group_key).get_settings(@type).find_by_key(params[:key])    
+    @setting = SettingGroup.find_by_key(@group_key).settings(@type).find_by_key(params[:key])
   end
 
   def update    
-    setting = SettingGroup.find_by_key(params[:group_key]).get_settings(params[:type]).find_by_id(params[:id])    
+    setting = SettingGroup.find_by_key(params[:group_key]).settings(params[:type]).find_by_id(params[:id])    
 
     respond_to do |format|
       if setting.update_attributes(params["#{params[:type]}_setting"])

@@ -27,20 +27,15 @@ class SettingGroup < ActiveRecord::Base
     end
   end   
 
-  def settings
-    result = []
-    self.types.each do |type|
-      type_plural = type.pluralize
-      result << self.send(type_plural).all
+  def settings type=nil
+    if type
+      self.send(type.pluralize)
+    else
+      result = []
+      self.types.each { |t| result << self.send(t.pluralize).all }
+      result
     end
   end
-
-  # def self.reset
-  #   StringSetting.destroy_all
-  #   BooleanSetting.destroy_all
-  #   TextSetting.destroy_all
-  #   SettingGroup.destroy_all
-  # end
 
   def self.find_group group_key
     g = SettingGroup.find_by_key(group_key)

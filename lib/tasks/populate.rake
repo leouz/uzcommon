@@ -124,7 +124,7 @@ namespace :db do
       print "\n"
     end
 
-    UZADMIN_METAS.each do |meta|              
+    UZ_ADMIN.each do |meta|              
       populate_batch(meta)      
     end
   end

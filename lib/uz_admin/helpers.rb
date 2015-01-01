@@ -5,7 +5,7 @@ module UzAdmin
     end
 
     def self.all
-      UZADMIN_METAS
+      UZ_ADMIN
     end
   end
 end
