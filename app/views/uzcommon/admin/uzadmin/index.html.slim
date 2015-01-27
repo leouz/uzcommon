@@ -15,8 +15,10 @@
         .panel-body
           = form_tag uzcommon.admin_uzadmin_index_path(@meta.base_path), :method => 'get' do
             -@meta.filters.each do |f|
-              =bs_filter f.type, f.field, @filter_options[f.field]
-
+              =bs_filter f.type, f.field, f.options, @filter_options[f.field]
+        .panel-footer
+          .pull-right.btn.btn-primary#uzadmin-apply-filters Apply
+          .clearfix
 
 table.table.table-striped
   thead
@@ -31,19 +33,24 @@ table.table.table-striped
       tr id="#{@meta.symbol}_#{m.id}"
         -if @meta.sort == :sort
           td
-            span.glyphicon.glyphicon-sort.drag
+            span.glyphicon.glyphicon-sort.drag        
         -@meta.index_fields.each do |f|
           -if f.type == :image
             td= bs_display(f.type, { url: m.send(f.name.to_s + '_url'), thumb: m.send(f.name.to_s + '_url', :thumb)})
+          -elsif f.type == :select
+            td= bs_display(f.type, m.send(f.name), f.options)
           -else
             td= bs_display(f.type, m.send(f.name))
+
         td.links                  
+          -if @meta.can :view
+            = link_to "View", uzcommon.admin_uzadmin_view_path(@meta.base_path, m), class: 'btn btn-primary'
           -if @meta.can :edit
             = link_to "Edit", uzcommon.admin_uzadmin_edit_path(@meta.base_path, m), class: 'btn btn-primary'
           -if @meta.can :delete
             = link_to "Delete", uzcommon.admin_uzadmin_destroy_path(@meta.base_path, m.id), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger'
           
-          -@meta.relationships.each do |r|
+          -@meta.relationships.select{|r| r.type == :has_many}.each do |r|
             = link_to "#{r.humanized_name_plural} (#{m.send(r.field).count})", uzcommon.admin_uzadmin_nested_index_path(@meta.base_path, m.id, r.nested_path), class: 'btn btn-primary'
 
           -@meta.custom_pages.each do |c|

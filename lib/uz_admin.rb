@@ -20,15 +20,16 @@ module UzAdmin
       m = @@meta[self.name]        
       m.fields.each do |f|
         attr_accessible f.name
-        mount_uploader(f.name, "#{m.name}#{f.name.to_s.camelize}Uploader".constantize) if f.type == :image                   
+        mount_uploader(f.name, "#{m.name}#{f.name.to_s.camelize}Uploader".constantize) if f.type == :image or f.type == :file
       end
 
       m.relationships.each do |r|
-        if r.type == :has_many
-          has_many r.field, :dependent => :destroy  
-          accepts_nested_attributes_for r.field, :allow_destroy => true
+        if [:has_many, :has_one].include? r.type
+          has_many r.field, r.class_declaration_options if r.type == :has_many
+          has_one r.field, r.class_declaration_options if r.type == :has_one
+          accepts_nested_attributes_for r.field, allow_destroy: true
         end
-        belongs_to r.field if r.type == :belongs_to      
+        belongs_to r.field, r.class_declaration_options if r.type == :belongs_to              
       end        
     
       include UzAdmin

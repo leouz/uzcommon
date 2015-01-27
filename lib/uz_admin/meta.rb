@@ -62,8 +62,10 @@ module UzAdmin
     end
     
     def initialize_list_args hash
-      @fields = []    
+      @fields = []
       hash[:fields].each{ |f| @fields << Field.new(f) }
+      @fields << Field.new({name: :created_at, type: :date, hidden: true})
+      @fields << Field.new({name: :updated_at, type: :date, hidden: true})
 
       @relationships = []    
       hash[:relationships].each{ |f| @relationships << Relationship.new(f) }

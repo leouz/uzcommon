@@ -21,7 +21,8 @@ Uzcommon::Engine.routes.draw do
     post    ':base_path'          => 'uzadmin#create',  as: :uzadmin_create
     put     ':base_path/:id'      => 'uzadmin#update',  as: :uzadmin_update
     get     ':base_path'          => 'uzadmin#index',   as: :uzadmin_index
-    get     ':base_path/:id/edit' => 'uzadmin#edit',    as: :uzadmin_edit        
+    get     ':base_path/:id/edit' => 'uzadmin#edit',    as: :uzadmin_edit
+    get     ':base_path/:id/view' => 'uzadmin#view',    as: :uzadmin_view
     delete  ':base_path/:id'      => 'uzadmin#destroy', as: :uzadmin_destroy
     post    ':base_path/sort'     => 'uzadmin#sort',    as: :uzadmin_sort
 
@@ -30,6 +31,7 @@ Uzcommon::Engine.routes.draw do
     put     ':base_path/:base_id/:nested_path/:nested_id'      => 'uzadmin_nested#update',  as: :uzadmin_nested_update
     get     ':base_path/:base_id/:nested_path'                 => 'uzadmin_nested#index',   as: :uzadmin_nested_index
     get     ':base_path/:base_id/:nested_path/:nested_id/edit' => 'uzadmin_nested#edit',    as: :uzadmin_nested_edit        
+    get     ':base_path/:base_id/:nested_path/:nested_id/view' => 'uzadmin_nested#view',    as: :uzadmin_nested_view        
     delete  ':base_path/:base_id/:nested_path/:nested_id'      => 'uzadmin_nested#destroy', as: :uzadmin_nested_destroy
     post    ':base_path/:base_id/:nested_path/sort'            => 'uzadmin_nested#sort',    as: :uzadmin_nested_sort       
 

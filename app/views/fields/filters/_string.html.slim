@@ -1,0 +1,6 @@
+.row
+  .col-md-2
+    label=field_name.to_s.humanize
+  .col-md-10
+    = text_field_tag field_name, filter_options[:current], { :class => 'form-control' }
+    

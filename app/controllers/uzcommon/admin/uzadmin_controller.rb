@@ -6,16 +6,32 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
     @filter_options = {}
 
     if @meta.filters.any?
-      @meta.filters.each do |f|
-        if f.type == :monthly
-          @filter_options[f.field], @collection = apply_monthly_filter @collection, f
-        end
+      @meta.filters.each do |f|        
+        @filter_options[f.field], @collection = send("apply_#{f.type}_filter", @collection, f)
       end
     else
       @collection = @meta.class.all
     end
 
     @collection = @collection.order(@meta.sort)
+  end
+
+  def apply_select_filter collection, filter
+    filter_param = params[filter.field]
+    options = { current: filter_param }
+    if filter_param and filter_param != 'all'
+      collection = collection.where(filter.field => filter_param)
+    end
+    [options, collection]
+  end
+
+  def apply_string_filter collection, filter    
+    filter_param = params[filter.field]
+    options = { current: filter_param }
+    if filter_param and filter_param != ''      
+      collection = collection.where("#{filter.field} LIKE ?", "%#{filter_param}%")
+    end
+    [options, collection]  
   end
 
   def apply_monthly_filter collection, filter    

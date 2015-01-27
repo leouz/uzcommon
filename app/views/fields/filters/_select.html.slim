@@ -1,0 +1,12 @@
+-if options[:options].is_a?(Hash)
+  -select_options = options[:options].to_a
+  -select_options = [['All', 'all']] + select_options.map{ |i| i.reverse }
+-else
+  -select_options = ['All'] + options[:options]
+
+.row
+  .col-md-2
+    label=field_name.to_s.humanize
+  .col-md-10
+    = select_tag field_name, options_for_select(select_options, filter_options[:current]), { :class => 'form-control' }
+    

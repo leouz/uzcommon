@@ -23,6 +23,8 @@
         .row
           .col-sm-3.col-md-2.sidebar
             %ul.nav.nav-sidebar            
+              %li
+                %a{ :class => ('active' if action?('home')), :href => "/admin/home" } Dashboard                  
               %li.nav-header Content
               = render :partial => "uzcommon/admin/menu-items", :formats => [:html]
               -SettingGroup.all.group_by{|i| i.main_group}.each do |k, v|
@@ -35,7 +37,7 @@
             = yield
             %hr
             %footer
-              %p © Eat 2014        
+              %p © Eat 2015       
     -else
       = yield
   .custom-modal-loading
