@@ -1,6 +1,3 @@
 = form_for [:admin, @model], url:  @url, html: { :class => 'form-horizontal' } do |f|
-  -@meta.form_fields.each do |mf|
-    -unless mf.hidden
-      = bs_input f, mf.name, mf.type, mf.options  
+  = render partial: "uzcommon/admin/uzadmin_partials/form_fields", locals: { f: f }
   = bs_actions f, uzcommon.admin_uzadmin_index_path(@meta.base_path)  
-  

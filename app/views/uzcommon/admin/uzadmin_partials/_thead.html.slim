@@ -1,0 +1,7 @@
+thead
+  tr
+    -if @meta.sort == :sort
+      th
+    -@meta.index_fields.each do |f|
+      = bs_table_header f
+    th

@@ -16,8 +16,7 @@ module Uzcommon::BsHelper
   end
   
   def bs_display type, value, options=nil
-    type = :string if type == :email    
-    type = :string if type == :permalink
+    type = :string if [:email, :permalink].include? type    
     type = :boolean if type == :checkbox
     value = "" if value == nil
     if type == :custom      

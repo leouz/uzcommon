@@ -1,0 +1,11 @@
+-@meta.index_fields.each do |f|
+  -field = @meta.fields.find{ |i| i.name == f } 
+  -if field
+    -if field.type == :image
+      td= bs_display(f.type, { url: m.send(field.name.to_s + '_url'), thumb: m.send(field.name.to_s + '_url', :thumb)})
+    -elsif field.type == :select
+      td= bs_display(field.type, m.send(field.name), field.options)
+    -else
+      td= bs_display(field.type, m.send(field.name))
+  -else
+    td= bs_display(:string, m.send(f))

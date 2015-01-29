@@ -18,6 +18,7 @@ module UzAdmin
           @nested_path = hash[:options][:nested_path] if hash[:options][:nested_path]
           @view_type = hash[:options][:view_type] if hash[:options][:view_type]
           @read_only = hash[:options][:read_only] if hash[:options][:read_only]
+          @through = hash[:options][:through] if hash[:options][:through]
         end
       end
 
@@ -30,14 +31,21 @@ module UzAdmin
         @field.to_s.underscore.titleize.pluralize
       end
 
+      def fk_field_name
+        "#{@field.to_s.singularize}_id".to_sym
+      end
+
       def meta
         @class_name.constantize.meta      
       end
 
       def class_declaration_options
         r = {}
-        r[:dependent] = :destroy if [:has_many, :has_one].include? @type
+        unless @through
+          r[:dependent] = :destroy if [:has_many, :has_one].include? @type  
+        end        
         r[:class_name] = @class_name if @class_name
+        r[:through] = @through if @through
         r        
       end
     end

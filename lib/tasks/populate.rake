@@ -37,7 +37,7 @@ namespace :db do
       end
       print "\n"
     end
-
+    
     UZ_ADMIN_POPULATE.each do |p|              
       populate_batch(p.meta)      
     end

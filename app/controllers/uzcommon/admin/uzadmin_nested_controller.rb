@@ -22,6 +22,10 @@ class Uzcommon::Admin::UzadminNestedController < AdminControllerBase
     @url = uzcommon.admin_uzadmin_nested_update_url(@base_meta.base_path, @base_instance.id, @relationship.nested_path, params[:nested_id])
   end
 
+  def view
+    edit
+  end
+
   def create
     if @meta.can :create
       @model = @relationship_collection.new(params[@meta.symbol])
@@ -71,7 +75,7 @@ class Uzcommon::Admin::UzadminNestedController < AdminControllerBase
     @base_instance = @base_meta.class.find params[:base_id]
 
     @custom_page = @base_meta.find_custom_page params[:nested_path]
-
+    
     if @custom_page.nil?
       @relationship = @base_meta.find_relationship params[:nested_path]
       @meta = @relationship.meta

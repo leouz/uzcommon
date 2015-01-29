@@ -1,0 +1,5 @@
+-@meta.form_fields.each do |mf|
+  -unless mf.hidden
+    -mf.options[:read_only] = true if @view
+    = bs_input f, mf.name, mf.type, mf.options
+

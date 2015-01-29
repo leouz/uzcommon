@@ -6,42 +6,27 @@
       -if @meta.can :create
         = link_to "New #{@meta.humanized_name}", uzcommon.admin_uzadmin_new_path(@meta.base_path), class: 'btn btn-primary'
 
-
 -if @meta.filters.any?
   .row.search-row.filters
     .col-md-12
       .panel.panel-info
-        .panel-heading Filters      
-        .panel-body
-          = form_tag uzcommon.admin_uzadmin_index_path(@meta.base_path), :method => 'get' do
+        = form_tag uzcommon.admin_uzadmin_index_path(@meta.base_path), :method => 'get' do
+          .panel-heading Filters
+          .panel-body            
             -@meta.filters.each do |f|
               =bs_filter f.type, f.field, f.options, @filter_options[f.field]
-        .panel-footer
-          .pull-right.btn.btn-primary#uzadmin-apply-filters Apply
-          .clearfix
+          .panel-footer
+            button.pull-right.btn.btn-primary#uzadmin-apply-filters type="submit" Apply
+            .clearfix
 
 table.table.table-striped
-  thead
-    tr
-      -if @meta.sort == :sort
-        th
-      -@meta.index_fields.each do |f|
-        = bs_table_header f.title
-      th
+  =render "uzcommon/admin/uzadmin_partials/thead"
+
   tbody class="#{'sortable' if @meta.sort == :sort}" data-url="#{uzcommon.admin_uzadmin_sort_path(@meta.base_path)}"
     - @collection.each do |m|
       tr id="#{@meta.symbol}_#{m.id}"
-        -if @meta.sort == :sort
-          td
-            span.glyphicon.glyphicon-sort.drag        
-        -@meta.index_fields.each do |f|
-          -if f.type == :image
-            td= bs_display(f.type, { url: m.send(f.name.to_s + '_url'), thumb: m.send(f.name.to_s + '_url', :thumb)})
-          -elsif f.type == :select
-            td= bs_display(f.type, m.send(f.name), f.options)
-          -else
-            td= bs_display(f.type, m.send(f.name))
-
+        =render partial: "uzcommon/admin/uzadmin_partials/td_sort", locals: { m: m }
+        =render partial: "uzcommon/admin/uzadmin_partials/index_fields", locals: { m: m }
         td.links                  
           -if @meta.can :view
             = link_to "View", uzcommon.admin_uzadmin_view_path(@meta.base_path, m), class: 'btn btn-primary'
@@ -55,4 +40,8 @@ table.table.table-striped
 
           -@meta.custom_pages.each do |c|
             = link_to "#{c.title}", uzcommon.admin_uzadmin_nested_index_path(@meta.base_path, m.id, c.nested_path), class: 'btn btn-primary', target: c.target
+
+          -@meta.links.each do |l|
+            -href = l.href.call(m)
+            = link_to "#{l.name}", href, class: 'btn btn-primary', target: l.target
 

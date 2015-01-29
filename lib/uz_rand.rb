@@ -35,6 +35,10 @@ module UzRand
     a[rand_int(0, a.length)]
   end
 
+  def rand_in_hash(a)    
+    a.to_a[rand_int(0, a.length)][0].to_s
+  end
+
   def rand_tag
     a = %w(aries taurus gemini cancer leo virgo libra scorpio sagittarius capricorn aquarius pisces)
     rand_in_array(a)
@@ -115,17 +119,23 @@ module UzRand
     if [:string, :email, :permalink, :text, :wysi].include?(field.type)
       rand_string_value_for_field(field)
     elsif [:select, :radiogroup].include?(field.type)
-      rand_in_array(field.options[:options])
+      if field.options[:options].is_a?(Hash)
+        rand_in_hash(field.options[:options])
+      else
+        rand_in_array(field.options[:options])
+      end
     elsif [:date, :time, :datetime].include?(field.type)
-      rand_time
+      rand_time      
     else      
       case field.type        
       when :tags
         rand_tags(field)
       when :password
         "test123"
-      when :checkbox
-        rand_boolean      
+      when :checkbox       
+        rand_boolean
+      when :money
+        rand_decimal * 100      
       when :currency
         rand_decimal
         # when :file

@@ -5,8 +5,4 @@
   -select_options = options[:options]
 
 = render :layout => "fields/wrapper_for_input", :locals => { :f => f, :field_name => field_name, :options => options } do
-  = f.select field_name, options_for_select(select_options, f.object.send(field_name)), :class => 'form-control'
-
-
-/ = render :layout => "fields/wrapper_for_input", :locals => { :f => f, :field_name => field_name, :options => options } do
-/   = f.select field_name, options[:options], :class => 'form-control'
+  = f.select field_name, options_for_select(select_options, f.object.send(field_name)), {}, :class => 'form-control'

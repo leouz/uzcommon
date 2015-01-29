@@ -10,9 +10,8 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
         @filter_options[f.field], @collection = send("apply_#{f.type}_filter", @collection, f)
       end
     else
-      @collection = @meta.class.all
-    end
-
+      @collection = @meta.class.scoped
+    end    
     @collection = @collection.order(@meta.sort)
   end
 
@@ -57,6 +56,10 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
   def edit
     @model = @meta.class.find(params[:id])
     @url = uzcommon.admin_uzadmin_update_url(@meta.base_path, params[:id])
+  end
+
+  def view    
+    edit    
   end
 
   def create    

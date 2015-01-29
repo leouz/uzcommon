@@ -1,2 +1,2 @@
 = render :layout => "fields/wrapper_for_input", :locals => { :f => f, :field_name => field_name, :options => options } do
-  = bs_display type, f.object.send(field_name), options
+  label.read-only= bs_display type, f.object.send(field_name), options
