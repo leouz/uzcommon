@@ -1,0 +1,15 @@
+.page-header
+  h1 Edit Setting
+  p
+    span.label.label-danger Watch Out!
+    | Changes in the Settings have effect directly on the website's behavior, so make sure you know what you're doing =]
+  ol.breadcrumb
+    li= @setting.group.main_group
+    li= @setting.group.display_name
+= form_for @setting, url: uzcommon.admin_update_setting_path, :html => { :class => 'form-horizontal' } do |f|
+  = hidden_field_tag  :id, @setting.id
+  = hidden_field_tag  :type, @type
+  = hidden_field_tag  :group_key, @group_key
+  -@type = "checkbox" if @type == "boolean"
+  = bs_input f, :value, @type, { :hint => @setting.hint, :label => @setting.display_name }
+  = bs_actions f, uzcommon.admin_settings_group_path(@setting.group.key)

@@ -1,0 +1,8 @@
+.form-group
+  .col-sm-offset-2.col-sm-10
+    -unless @view
+      button.btn.btn-primary  type=("submit" )  Save
+    -if back_path
+      -label = "Cancel"
+      -label = "<< Back" if @view
+      = link_to label, back_path, :class => 'btn btn-default'

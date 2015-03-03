@@ -1,0 +1,3 @@
+= render :layout => "fields/wrapper_for_input", :locals => { :f => f, :field_name => field_name, :options => options } do
+  -size = options[:size] ? options[:size] : 8
+  = f.text_area field_name, :class => 'form-control', :rows => size

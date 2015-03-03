@@ -1,0 +1,10 @@
+.form-group
+  .col-sm-offset-2.col-sm-10
+    .checkbox
+      = f.check_box field_name
+      -if options[:label]
+        = f.label options[:label]
+      -else
+        = f.label field_name
+  -if options[:hint]
+    p.help-block= options[:hint]

@@ -39,7 +39,7 @@ namespace :db do
     end
     
     UZ_ADMIN_POPULATE.each do |p|              
-      populate_batch(p.meta)      
+      populate_batch(p.constantize.meta)      
     end
   end
 end

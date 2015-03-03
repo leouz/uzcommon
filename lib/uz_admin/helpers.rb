@@ -5,7 +5,7 @@ module UzAdmin
     end
 
     def self.all
-      UZ_ADMIN.map{ |m| m.meta }
+      UZ_ADMIN.map{ |m| m.constantize.meta }
     end
   end
 end

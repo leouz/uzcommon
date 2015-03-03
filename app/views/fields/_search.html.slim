@@ -1,0 +1,6 @@
+= form_tag path, :method => 'get' do
+  .input-group
+    = text_field_tag :search, @search, :class => "form-control"
+    span.input-group-btn
+      button.btn.btn-default  type: "button", type: "submit", value: "Search"  
+        span.glyphicon.glyphicon-search

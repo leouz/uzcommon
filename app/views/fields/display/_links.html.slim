@@ -1,0 +1,4 @@
+-if value[:edit]
+  = link_to "Edit", value[:edit], :class => 'btn btn-primary'
+-if value[:delete]
+  = link_to "Delete", value[:delete], :method => :delete, :data => { :confirm => "Are you sure?" }, :class => 'btn btn-danger'
