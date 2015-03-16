@@ -11,14 +11,14 @@ html(lang="en")
     = javascript_include_tag "admin"
   body
     -if admin?
-      .navbar.navbar-inverse.navbar-fixed-top role: "navigation" 
+      .navbar.navbar-inverse.navbar-fixed-top role="navigation" 
         .container-fluid
           .navbar-header
-            a.navbar-brand href: "#{uzcommon.admin_root_path}" = setting(:general, :website_title) + " - Admin Area"
+            a.navbar-brand href="#{uzcommon.admin_root_path}"= setting(:general, :website_title) + " - Admin Area"
           .navbar-collapse
             ul.nav.navbar-nav.navbar-right
               li
-                a  href=("#{uzcommon.admin_logout_path}" )  Logout
+                a  href="#{uzcommon.admin_logout_path}" Logout
       .container-fluid
         .row
           .col-sm-3.col-md-2.sidebar

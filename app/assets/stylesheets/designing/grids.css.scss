@@ -17,13 +17,13 @@
   column-fill: auto;
 }
 
-@mixin set-grid-wrapper($cols, $margin) {
+@mixin set-grid-wrapper($cols, $margin: 0) {
   clear: both;
   width: 100% + $margin;
   margin-left: -($margin);
 }
 
-@mixin set-grid-block($cols, $margin) {
+@mixin set-grid-block($cols, $margin: 0) {
   float: left;
   width: (100% - ($cols * $margin)) / $cols;    
   display: block;

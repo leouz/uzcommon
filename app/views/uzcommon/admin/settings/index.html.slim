@@ -22,23 +22,23 @@ table.table.table-striped
             span.glyphicon.glyphicon-ok
           -else
             span.glyphicon.glyphicon-remove
-        td= bs_display(:links,   edit=uzcommon.admin_edit_setting_path(@group.key, :boolean, s.key)  )
+        td= bs_display :links, { edit: uzcommon.admin_edit_setting_path(@group.key, :boolean, s.key) }
     - @strings.each do |s|
       tr
         td= s.display_name
         -if s.type == "ImageSetting"
-          td= bs_display(:image,   url=s.value_url thumb=(s.value_url(:thumb) ) )
-          td= bs_display(:links,   edit=uzcommon.admin_edit_setting_path(@group.key, :image, s.key)  )
+          td= bs_display :image, { url: s.value_url, thumb: s.value_url(:thumb) }
+          td= bs_display :links, { edit: uzcommon.admin_edit_setting_path(@group.key, :image, s.key) }
         -elsif s.type == "FileSetting"
           td
             a href="#{s.value_url}" = s.value_url
-          td= bs_display(:links,   edit=uzcommon.admin_edit_setting_path(@group.key, :file, s.key)  )
+          td= bs_display :links, { edit: uzcommon.admin_edit_setting_path(@group.key, :file, s.key) }
         -else
           td= s.value
-          td= bs_display(:links,   edit=uzcommon.admin_edit_setting_path(@group.key, :string, s.key)  )
+          td= bs_display :links, { edit: uzcommon.admin_edit_setting_path(@group.key, :string, s.key) }
     - @texts.each do |s|
       tr
         td= s.display_name
         td= s.value
-        td= bs_display(:links,   edit=uzcommon.admin_edit_setting_path(@group.key, :text, s.key)  )
+        td= bs_display :links, { edit: uzcommon.admin_edit_setting_path(@group.key, :text, s.key) }
     

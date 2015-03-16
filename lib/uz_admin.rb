@@ -21,6 +21,10 @@ module UzAdmin
       m.fields.each do |f|
         attr_accessible f.name
         mount_uploader(f.name, "#{m.name}#{f.name.to_s.camelize}Uploader".constantize) if f.type == :image or f.type == :file
+
+        if f.type == :money
+          monetize "#{f.name}_cents" 
+        end
       end
 
       m.relationships.each do |r|

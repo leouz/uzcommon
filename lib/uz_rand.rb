@@ -1,6 +1,10 @@
 module UzRand
   require 'faker'
 
+  def rand_color
+    "#" + ("%06x" % (rand * 0xffffff))
+  end
+
   def rand_image
     root_path = Gem::Specification.find_by_name("uzcommon").gem_dir
     File.open(File.join(root_path, "/lib/tasks/random-images/" + rand(1..71).to_s + ".jpg"))
@@ -12,11 +16,15 @@ module UzRand
   end
 
   def rand_int(from=1, to=100)
-    rand_in_range(from, to).to_i
+    rand_in_range(from, to + 1).to_i
   end
 
   def rand_decimal(from=10.0, to=99.0)
     rand_in_range(from, to).round(2)
+  end
+
+  def rand_money(from=1, to=1000)
+    rand_in_range(from, to).to_i
   end
 
   def rand_time(from=1.month.ago, to=2.months.from_now)      
@@ -32,7 +40,7 @@ module UzRand
   end
 
   def rand_in_array(a)
-    a[rand_int(0, a.length)]
+    a[rand_int(0, a.length - 1)]
   end
 
   def rand_in_hash(a)    
@@ -62,17 +70,12 @@ module UzRand
     '<h3>Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</h3><div><span style="font-weight: bold; font-size: 24px; line-height: 1.1;"><br></span></div><div><span style="font-weight: bold; font-size: 24px; line-height: 1.1;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><br></div><div><span style="font-style: italic; font-size: 24px; line-height: 1.1;"><br></span></div><div><span style="font-style: italic; font-size: 24px; line-height: 1.1;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><br></div><div><span style="text-decoration: underline; font-size: 24px; line-height: 1.1;"><br></span></div><div><span style="text-decoration: underline; font-size: 24px; line-height: 1.1;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><br></div><div><br></div><div><div><span style="font-weight: bold; font-style: italic;"><span style="text-decoration: underline; font-size: 24px; line-height: 1.1;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><br></span></div></div><div><span style="text-decoration: underline; font-size: 24px; line-height: 1.1;"><br></span></div><div><span style="color: inherit; font-family: inherit; font-size: 18px; line-height: 1.1;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><br></div><div><br></div><div><h4 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</h4></div><div><br></div><div><h4 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);"><span style="font-style: italic;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span></h4></div><div><h4 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);"><br></h4><h4 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);"><span style="text-decoration: underline;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span></h4></div><div><br></div><h5>Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</h5><div><br></div><div><span style="font-weight: bold;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><br></div><div><br></div><div><span style="font-style: italic;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><br></div><div><br></div><div><span style="text-decoration: underline;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><br></div><div><br></div><span style="font-weight: bold; font-style: italic; text-decoration: underline;">Commodi sit id. Pariatur ut soluta corporis in. Maiores dolores eos inventore consequatur quia. Maxime sunt necessitatibus eum praesentium recusandae.</span><div><span style="font-weight: bold; font-style: italic; text-decoration: underline;"><br></span></div><div><span style="font-weight: bold; font-style: italic; text-decoration: underline;"><br></span></div><div><h5 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">left</h5><h5 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Commodi&nbsp;</h5><h5 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">sit id. Pariatur&nbsp;</h5><h5 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">ut soluta corporis in</h5><h5 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Maiores dolores eos&nbsp;</h5><h5 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">inventore&nbsp;</h5></div><div><br></div><div><h5 style="text-align: center; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">center</h5><h5 style="text-align: center; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Commodi&nbsp;</h5><h5 style="text-align: center; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">sit id. Pariatur&nbsp;</h5><h5 style="text-align: center; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">ut soluta corporis in</h5><h5 style="text-align: center; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Maiores dolores eos&nbsp;</h5><h5 style="text-align: center; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">inventore&nbsp;</h5></div><div><br></div><div><h5 style="text-align: right; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">right</h5><h5 style="text-align: right; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Commodi&nbsp;</h5><h5 style="text-align: right; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">sit id. Pariatur&nbsp;</h5><h5 style="text-align: right; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">ut soluta corporis in</h5><h5 style="text-align: right; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">Maiores dolores eos&nbsp;</h5><h5 style="text-align: right; font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);">inventore</h5><h5 style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);"><ol><li><span style="line-height: 1.1;">Commodi&nbsp;</span><br></li><li><span style="line-height: 1.1;">sit id. Pariatur&nbsp;</span><br></li><li><span style="line-height: 1.1;">ut soluta corporis in</span><br></li><li><span style="line-height: 1.1;">Maiores dolores eos</span><br></li><li><span style="line-height: 1.1;">inventore&nbsp;</span></li></ol><div><ul><li><span style="line-height: 1.1;">Commodi&nbsp;</span><br></li><li><span style="line-height: 1.1;">sit id. Pariatur&nbsp;</span><br></li><li><span style="line-height: 1.1;">ut soluta corporis in</span><br></li><li><span style="line-height: 1.1;">Maiores dolores eos</span><br></li><li><span style="line-height: 1.1;">inventore&nbsp;</span></li></ul></div></h5></div>'
   end
 
-  def rand_tags(field)
-    result = []
-    if field.populate.values?
-      rand_int(1,5).each do
-        result << rand_in_array(field.populate.values)
-      end
-    else
-      rand_int(1,5).each do
-        result << rand_tag
-      end
-    end
+  def rand_tags
+    result = []        
+    (1..rand_int(1,5)).each do
+      result << rand_tag
+    end    
+    result.join(", ")
   end
 
   def rand_string(type)
@@ -127,15 +130,17 @@ module UzRand
     elsif [:date, :time, :datetime].include?(field.type)
       rand_time      
     else      
-      case field.type        
-      when :tags
-        rand_tags(field)
+      case field.type 
+      when :color_picker
+        rand_color       
+      # when :tags
+        # rand_tags(field)
       when :password
         "test123"
       when :checkbox       
         rand_boolean
       when :money
-        rand_decimal * 100      
+        rand_money      
       when :currency
         rand_decimal
         # when :file
@@ -151,5 +156,13 @@ module UzRand
   rescue
     print "rand_value_for_field(#{field.name})"
     raise
+  end
+
+  def create_hash(class_)
+    result = {}
+    class_.meta.form_fields.each do |f|          
+      result[f.name] = rand_value_for_field(f) unless f.type == :tags
+    end
+    result
   end
 end

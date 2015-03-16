@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   # core =====================================================
-  s.add_dependency "rails", "3.2.21"
+  s.add_dependency "rails"  
 
   # model helpers ============================================  
   s.add_dependency "kaminari"
@@ -50,4 +50,5 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "debugger"
+  s.add_development_dependency "bower-rails"  
 end

@@ -52,7 +52,8 @@ module UzAdmin
 
       field_types = %w(custom checkbox email password string currency file)
       field_types += %w(permalink text date image radiogroup time)
-      field_types += %w(datetime number select wysi file money integer)      
+      field_types += %w(datetime number select wysi file money integer)
+      field_types += %w(color_picker tags)
       field_types.each do |type|
         define_method type do |name, args={}|
           @fields << { type: type.to_sym, name: name, options: args }
