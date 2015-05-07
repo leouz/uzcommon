@@ -17,6 +17,13 @@
   }
 }
 
+@mixin all-states() {
+  &:link, &:visited, &:hover, &:active { 
+    @content;
+  }
+}
+
+
 @mixin top-bottom($property, $size) {
  #{$property}-top: $size;
  #{$property}-bottom: $size;  

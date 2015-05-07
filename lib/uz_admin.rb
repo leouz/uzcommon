@@ -7,17 +7,17 @@ module UzAdmin
   extend ActiveSupport::Concern 
 
   module ActiveRecord
-    def uz_admin selfie, &block
-      @@meta ||= {}
-            
-      if @@meta[self.name].nil?        
+    def uz_admin selfie, &block            
+      if class_variable_defined?("@@meta")
+        meta = class_variable_get("@@meta")
+      else
         m = MetaBuilder.new(selfie)
         yield(m)
-        @@meta[self.name] = m.build
-        @meta = m.build
+        meta = m.build            
+        class_variable_set("@@meta", meta) 
       end
             
-      m = @@meta[self.name]        
+      m = meta
       m.fields.each do |f|
         attr_accessible f.name
         mount_uploader(f.name, "#{m.name}#{f.name.to_s.camelize}Uploader".constantize) if f.type == :image or f.type == :file
@@ -44,8 +44,8 @@ module UzAdmin
   end
 
   module ClassMethods
-    def meta      
-      @meta
+    def meta          
+      class_variable_get("@@meta")
     end
   end
 end

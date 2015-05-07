@@ -10,7 +10,11 @@ class Uzcommon::Admin::SessionsController < UzcommonControllerBase
     
     if admin?
       flash[:notice] = "Successfully logged in";
-      redirect_to uzcommon.admin_settings_group_path
+      if UZ_ADMIN_DASHBOARD
+        redirect_to uzcommon.admin_dashboard
+      else
+        redirect_to uzcommon.admin_settings_group_path
+      end
     else
       flash[:error] = "Wrong password!";
       redirect_to uzcommon.admin_root_path

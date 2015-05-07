@@ -1,8 +1,9 @@
 # -*- encoding : utf-8 -*-
 Uzcommon::Engine.routes.draw do
   match '/admin' => 'Admin::sessions#new', as: :admin
+
   namespace :admin do
-    root :to => 'sessions#new'
+    root :to => 'sessions#new'    
 
     match 'login' => 'sessions#create', as: :login
     match 'logout' => 'sessions#destroy', as: :logout
@@ -14,6 +15,8 @@ Uzcommon::Engine.routes.draw do
     post '/assets/summernote-upload' => 'assets#summernote_upload'
     post '/assets/destroy' => 'assets#destroy', :as => :assets_destroy
     get '/assets/get(/:group)' => 'assets#get', :as => :assets_get
+
+    get '/dashboard' => 'dashboard#index',     as: :dashboard
 
     resources :assets, :only => [:index, :create]
 

@@ -23,8 +23,9 @@ html(lang="en")
         .row
           .col-sm-3.col-md-2.sidebar
             ul.nav.nav-sidebar
-              li
-                a  class=(('active' if action?('home'))) href=("/admin/home" )  Dashboard
+              -if UZ_ADMIN_DASHBOARD
+                li
+                  a  class=(('active' if action?('dashboard'))) href=("/admin/dashboard" )  Dashboard
               li.nav-header Content
               = render :partial => "uzcommon/admin/menu-items", :formats => [:html]
               -SettingGroup.all.group_by{|i| i.main_group}.each do |k, v|
