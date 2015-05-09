@@ -1,4 +1,18 @@
-= form_tag uzcommon.admin_login_path, { :class => "form-signin" } do
-  h2.form-signin-heading Please sign in
-  input.form-control placeholder="Password" type="password" name="password" 
-  button.btn.btn-lg.btn-primary.btn-block type="submit"  Sign in
+/ = form_tag uzcommon.admin_login_path, { :class => "form-signin" } do
+/   h2.form-signin-heading Please sign in  
+/   input.form-control placeholder="Password" type="password" name="password" 
+/   button.btn.btn-lg.btn-primary.btn-block type="submit"  Sign in
+ 
+.container.login-container
+  .card.card-container
+    = form_tag uzcommon.admin_login_path, { :class => "form-signin" } do
+      h2 Admin Area
+      input.form-control placeholder="Password" type="password" name="password" 
+      -flash.each do |key, value|
+        .alert class="#{flash_class(key)}"
+        	span.glyphicon.glyphicon-exclamation-sign
+        	| &nbsp;
+        	= value
+      button.btn.btn-lg.btn-primary.btn-block.btn-signin type="submit"  Sign in      
+    p: .pull-right: a(mailto="mailto:contact@weareeat.com") Contact Eat
+span(ui-view="")
