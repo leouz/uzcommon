@@ -1,0 +1,41 @@
+.bs-docs-section
+  .row
+    .col-lg-12
+      .page-header
+        h1#dialogs Dialogs
+  .row
+    .col-lg-6
+      h2 Modals
+      .bs-component
+        .modal
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+                h4.modal-title Modal title
+              .modal-body
+                p One fine body…
+              .modal-footer
+                button.btn.btn-default data-dismiss="modal" type="button"  Close
+                button.btn.btn-primary type="button"  Save changes
+    .col-lg-6
+      h2 Popovers
+      .bs-component
+        button.btn.btn-default data-container="body" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="left" data-toggle="popover" type="button"  Left
+        button.btn.btn-default data-container="body" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="top" data-toggle="popover" type="button"  Top
+        button.btn.btn-default data-container="body" data-content="Vivamus\n              sagittis lacus vel augue laoreet rutrum faucibus." data-placement="bottom" data-toggle="popover" type="button"  Bottom
+        button.btn.btn-default data-container="body" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="right" data-toggle="popover" type="button"  Right
+      h2 Tooltips
+      .bs-component
+        button.btn.btn-default data-original-title="Tooltip on left" data-placement="left" data-toggle="tooltip" title="" type="button"  Left
+        button.btn.btn-default data-original-title="Tooltip on top" data-placement="top" data-toggle="tooltip" title="" type="button"  Top
+        button.btn.btn-default data-original-title="Tooltip on bottom" data-placement="bottom" data-toggle="tooltip" title="" type="button"  Bottom
+        button.btn.btn-default data-original-title="Tooltip on right" data-placement="right" data-toggle="tooltip" title="" type="button"  Right
+#source-modal.modal.fade
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"  &times;
+        h4.modal-title Source Code
+      .modal-body
+        pre

@@ -27,12 +27,15 @@ module UzAdmin
         end
       end
 
+      required_fields = m.fields.select{|f| !!f.options[:required] }.map{|f| f.name}
+      validates_presence_of required_fields if required_fields.any?
+
       m.relationships.each do |r|
         if [:has_many, :has_one].include? r.type
           has_many r.field, r.class_declaration_options if r.type == :has_many
           has_one r.field, r.class_declaration_options if r.type == :has_one
           accepts_nested_attributes_for r.field, allow_destroy: true
-        end
+        end        
         belongs_to r.field, r.class_declaration_options if r.type == :belongs_to              
       end        
     

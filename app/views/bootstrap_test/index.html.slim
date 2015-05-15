@@ -1,0 +1,36 @@
+doctype html
+html lang="en" 
+  head
+    meta charset="utf-8" 
+    title Test Bootstrap
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    meta content="IE=edge" http-equiv="X-UA-Compatible"    
+    = stylesheet_link_tag "test_bootstrap", :media => "all"  
+  body
+    .container
+      =render "navbar"
+      =render "buttons"
+      =render "type"
+      / =render "tables"
+      =render "forms"
+      .bs-docs-section 
+        .row: .col-lg-12
+          .page-header: h1 Navs
+        =render "navs_nav-tabs"
+        =render "navs_nav-pills"
+        / =render "navs_nav-breadcrumbs"
+        =render "navs_pagination"
+        / =render "navs_pager"
+      .bs-docs-section 
+        .row: .col-lg-12
+          .page-header: h1 Indicators
+        =render"indicators_alerts"
+        =render"indicators_labels"
+        =render"indicators_badges"
+      / =render "progress"
+      .bs-docs-section 
+        .row: .col-lg-12
+          .page-header: h1 Containers
+        =render "container"
+      =render "dialogs"
+    = javascript_include_tag "test-bootstrap"
