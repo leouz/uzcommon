@@ -19,36 +19,36 @@ Gem::Specification.new do |s|
   # core =====================================================
   s.add_dependency "rails"  
 
-  # model helpers ============================================  
-  s.add_dependency "kaminari"
+  # # model helpers ============================================  
+  # s.add_dependency "kaminari"
 
-  # populate =================================================
-  s.add_dependency "faker"
-  s.add_dependency "populator"
+  # # populate =================================================
+  # s.add_dependency "faker"
+  # s.add_dependency "populator"
 
-  # assets processors ========================================
-  s.add_dependency "compass"
-  s.add_dependency "compass-rails"
-  s.add_dependency "coffee-rails", "~> 3.2.1"
-  s.add_dependency "slim"
-  s.add_dependency "slim-rails"  
+  # # assets processors ========================================
+  # s.add_dependency "compass"
+  # s.add_dependency "compass-rails"
+  # s.add_dependency "coffee-rails", "~> 3.2.1"
+  # s.add_dependency "slim"
+  # s.add_dependency "slim-rails"  
 
-  # assets libraries =========================================
-  s.add_dependency "jquery-rails"
-  s.add_dependency 'underscore-rails'
-  s.add_dependency 'jquery-fileupload-rails'
-  s.add_dependency 'bootstrap-sass', '~> 3.1.1'
-  s.add_dependency 'autoprefixer-rails'
-  s.add_dependency 'font-awesome-sass'
-  s.add_dependency 'bootstrap-wysihtml5-rails'
-  s.add_dependency 'summernote-rails'
+  # # assets libraries =========================================
+  # s.add_dependency "jquery-rails"
+  # s.add_dependency 'underscore-rails'
+  # s.add_dependency 'jquery-fileupload-rails'
+  # s.add_dependency 'bootstrap-sass', '~> 3.1.1'
+  # s.add_dependency 'autoprefixer-rails'
+  # s.add_dependency 'font-awesome-sass'
+  # s.add_dependency 'bootstrap-wysihtml5-rails'
+  # s.add_dependency 'summernote-rails'
 
-  # image processing =========================================  
-  s.add_dependency 'rmagick'
-  s.add_dependency 'carrierwave'
+  # # image processing =========================================  
+  # s.add_dependency 'rmagick'
+  # s.add_dependency 'carrierwave'
 
   
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "debugger"
-  s.add_development_dependency "bower-rails"  
+  s.add_development_dependency "bower-rails"
 end

@@ -6,12 +6,14 @@ module UzRand
   end
 
   def rand_image
-    root_path = Gem::Specification.find_by_name("uzcommon").gem_dir
+    root_path = Gem.loaded_specs['uzcommon'].full_gem_path
+
     File.open(File.join(root_path, "/lib/tasks/random-images/" + rand(1..71).to_s + ".jpg"))
   end
 
   def rand_file
-    root_path = Gem::Specification.find_by_name("uzcommon").gem_dir
+    root_path = Gem.loaded_specs['uzcommon'].full_gem_path
+    
     File.open(File.join(root_path, "/lib/tasks/random-files/1.pdf"))
   end
 
