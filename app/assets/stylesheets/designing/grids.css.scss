@@ -17,15 +17,23 @@
   column-fill: auto;
 }
 
-@mixin set-grid-wrapper($cols, $margin: 0) {
+@mixin set-grid-wrapper($margin: 0) {
   clear: both;
   width: 100% + $margin;
   margin-left: -($margin);
 }
 
-@mixin set-grid-block($cols, $margin: 0) {
+@mixin set-grid-custom-block($width, $cols, $margin: 0) {
   float: left;
-  width: (100% - ($cols * $margin)) / $cols;    
+  width: $width - $margin;  
+  display: block;
+  margin-left: $margin;
+}
+
+@mixin set-grid-block($cols, $margin: 0, $adjust: 0) {
+  float: left;
+  width: ((100% - ($cols * $margin)) / $cols) - $adjust;
   display: block;
   margin-left: $margin;    
 }
+
