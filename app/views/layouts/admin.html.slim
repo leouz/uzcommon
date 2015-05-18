@@ -25,16 +25,15 @@ html(lang="en")
             ul.nav.nav-sidebar
               -if UZ_ADMIN_DASHBOARD
                 li
-                  a  class=(('active' if action?('dashboard'))) href=("/admin/dashboard" )  Dashboard
-              li.nav-header Content
-              = render :partial => "uzcommon/admin/menu-items", :formats => [:html]
+                  a  class=(('active' if action?('dashboard'))) href=("/admin/dashboard" )  Dashboard                          
+              = render :partial => "admin/menu-items", :formats => [:html]
               -SettingGroup.all.group_by{|i| i.main_group}.each do |k, v|
                 li.nav-header= k
                 -v.each do |g|
                   li
                     a  class=(('active' if action?(g.key))) href=("#{uzcommon.admin_settings_group_path(g.key)}" ) 
                       = g.display_name
-          .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+          .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main class="#{@meta.css_wrapper_class if @meta}"            
             = yield
             hr
             footer

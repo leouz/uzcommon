@@ -7,11 +7,11 @@ module UzAdmin
   extend ActiveSupport::Concern 
 
   module ActiveRecord
-    def uz_admin selfie, &block            
+    def uz_admin &block     
       if class_variable_defined?("@@meta")
         meta = class_variable_get("@@meta")
       else
-        m = MetaBuilder.new(selfie)
+        m = MetaBuilder.new(self)
         yield(m)
         meta = m.build            
         class_variable_set("@@meta", meta) 

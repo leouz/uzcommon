@@ -6,7 +6,7 @@ require "uz_admin/meta/link"
 
 module UzAdmin
   class Meta    
-    attr_accessor :class, :name, :humanized_name, :humanized_name_plural, :symbol
+    attr_accessor :class, :name, :humanized_name, :humanized_name_plural, :symbol, :css_wrapper_class
     attr_accessor :sort, :base_path, :index_fields, :populate_batch_count, :title_field
     attr_accessor :fields, :relationships, :custom_pages, :filters, :links
         
@@ -40,6 +40,7 @@ module UzAdmin
       @humanized_name = @name.underscore.titleize
       @humanized_name_plural = @humanized_name.pluralize
       @symbol = @name.underscore
+      @css_wrapper_class = "uz_admin-#{@symbol}"
     end
 
     def initialize_other_args hash
