@@ -1,3 +1,3 @@
 module Uzcommon
-  VERSION = "1.5.5.hxh"
+  VERSION = "1.5.6.hxh"
 end
