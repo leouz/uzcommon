@@ -1,1 +1,6 @@
-=value[0..100] + (value.length > 99 ? "..." : "")
+-if @view
+  = value
+-else
+  -value = value.to_s unless is_a?(String)
+  -if value
+    =value[0..100] + (value.length > 49 ? "..." : "")
