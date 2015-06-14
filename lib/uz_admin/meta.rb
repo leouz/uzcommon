@@ -5,15 +5,15 @@ require "uz_admin/meta/field"
 require "uz_admin/meta/link"
 
 module UzAdmin
-  class Meta    
+  class Meta
     attr_accessor :class, :name, :humanized_name, :humanized_name_plural, :symbol, :css_wrapper_class
-    attr_accessor :sort, :base_path, :index_fields, :populate_batch_count, :title_field
+    attr_accessor :sort, :base_path, :index_fields, :title_field
     attr_accessor :fields, :relationships, :custom_pages, :filters, :links
-        
+
     def initialize hash
       initialize_class_based_args hash
       initialize_list_args hash
-      initialize_other_args hash      
+      initialize_other_args hash
     end
 
     def can action
@@ -21,15 +21,28 @@ module UzAdmin
     end
 
     def form_fields
+      @fields.select{ |f| f.type != :view }
+    end
+
+    def view_fields
       @fields
     end
 
-    def find_relationship nested_path      
+    def find_relationship nested_path
       @relationships.find{ |r| r.type == :has_many and r.field.to_s == nested_path }
-    end  
+    end
 
     def find_custom_page name
       @custom_pages.detect{ |c| c.nested_path.to_s == name }
+    end
+
+    def populate_batch_count
+      if @populate_batch_count.is_a?(Range)
+        a = @populate_batch_count.to_a
+        rand_int(a.first, a.last)
+      else
+        @populate_batch_count
+      end
     end
 
     private
@@ -62,33 +75,33 @@ module UzAdmin
       @title_field = :id
       @title_field = hash[:title_field] if hash[:title_field]
     end
-    
+
     def initialize_list_args hash
       @fields = []
       hash[:fields].each{ |f| @fields << Field.new(f) }
-      
-      def add_hidden_field name, type        
+
+      def add_hidden_field name, type
         @fields << Field.new({name: name, type: type, hidden: true, read_only: true}) if !@fields.any?{ |i| i.name == name }
       end
-      
+
       add_hidden_field :id, :integer
       add_hidden_field :created_at, :datetime
       add_hidden_field :updated_at, :datetime
-      
+
       @relationships = []
-      hash[:relationships].each do |f| 
-        r = Relationship.new(f) 
+      hash[:relationships].each do |f|
+        r = Relationship.new(f)
         @relationships << r
         add_hidden_field r.fk_field_name, :integer if r.type == :belongs_to
       end
 
-      @filters = []    
-      hash[:filters].each{ |f| @filters << Filter.new(f) }    
+      @filters = []
+      hash[:filters].each{ |f| @filters << Filter.new(f) }
 
-      @custom_pages = []      
+      @custom_pages = []
       hash[:custom_pages].each{ |f| @custom_pages << CustomPage.new(f) } if hash[:custom_pages] != nil
 
-      @links = []      
+      @links = []
       hash[:links].each{ |f| @links << Link.new(f) } if hash[:links] != nil
     end
   end

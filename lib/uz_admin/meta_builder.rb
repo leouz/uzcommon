@@ -1,7 +1,7 @@
 module UzAdmin
   class MetaBuilder
     def initialize selfie
-      @hash = { :class => selfie }    
+      @hash = { :class => selfie }
       @hash[:filters] = []
       @hash[:fields] = []
       @hash[:relationships] = []
@@ -19,12 +19,12 @@ module UzAdmin
       end
     end
 
-    %w(has_many has_one belongs_to).each do |type|      
+    %w(has_many has_one belongs_to).each do |type|
       define_method type do |field, args={}|
         @hash[:relationships] << { field: field, type: type.to_sym, options: args }
       end
     end
-    
+
     def filter type, field, args={}
       @hash[:filters] << { type: type, field: field, options: args }
     end
@@ -36,24 +36,24 @@ module UzAdmin
     def link name, href, args={}
       @hash[:links] << { name: name, href: href, options: args }
     end
-    
+
     def fields
       meta_field_builder = MetaFieldBuilder.new()
       yield(meta_field_builder)
       @hash[:fields] = meta_field_builder.fields
-    end    
+    end
 
     class MetaFieldBuilder
       attr_accessor :fields
 
       def initialize
-        @fields = []      
+        @fields = []
       end
 
       field_types = %w(custom checkbox email password string currency file)
       field_types += %w(permalink text date image radiogroup time)
       field_types += %w(datetime number select wysi file money integer)
-      field_types += %w(color_picker tags)
+      field_types += %w(color_picker tags view)
       field_types.each do |type|
         define_method type do |name, args={}|
           @fields << { type: type.to_sym, name: name, options: args }

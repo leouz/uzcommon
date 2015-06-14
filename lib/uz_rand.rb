@@ -13,7 +13,7 @@ module UzRand
 
   def rand_file
     root_path = Gem.loaded_specs['uzcommon'].full_gem_path
-    
+
     File.open(File.join(root_path, "/lib/tasks/random-files/1.pdf"))
   end
 
@@ -29,7 +29,7 @@ module UzRand
     rand_in_range(from, to).to_i
   end
 
-  def rand_time(from=1.month.ago, to=2.months.from_now)      
+  def rand_time(from=1.month.ago, to=2.months.from_now)
     Time.at(rand_in_range(from.to_f, to.to_f))
   end
 
@@ -45,7 +45,7 @@ module UzRand
     a[rand_int(0, a.length - 1)]
   end
 
-  def rand_in_hash(a)    
+  def rand_in_hash(a)
     a.to_a[rand_int(0, a.length)][0].to_s
   end
 
@@ -55,7 +55,7 @@ module UzRand
   end
 
   def rand_video_link
-    links = [ 
+    links = [
       "https://www.youtube.com/watch?v=URtRbt7evEA",
       "https://www.youtube.com/watch?v=xBfz_w9fXXs",
       "https://www.youtube.com/watch?v=tlCpp1MrQk0",
@@ -73,15 +73,15 @@ module UzRand
   end
 
   def rand_tags
-    result = []        
+    result = []
     (1..rand_int(1,5)).each do
       result << rand_tag
-    end    
+    end
     result.join(", ")
   end
 
   def rand_string(type)
-    case type    
+    case type
     when :title
       Faker::Name.title
     when :name
@@ -93,20 +93,20 @@ module UzRand
     when :permalink
       Faker::Name.title.delete(' ').underscore.dasherize
     when :video_link
-      rand_video_link      
+      rand_video_link
     when :summary
-      Faker::Lorem.sentence(rand_int(1, 3)).titleize.delete('.')      
+      Faker::Lorem.sentence(rand_int(1, 3)).titleize.delete('.')
     when :text
       Faker::Lorem.paragraph(2)
     when :wysi
-      Faker::Lorem.paragraph(2)        
+      Faker::Lorem.paragraph(2)
     else
       Faker::Lorem.sentence(rand_int(1, 3)).titleize.delete('.')
     end
   end
 
-  def rand_string_value_for_field(field) 
-    field_to_s = field.name.to_s     
+  def rand_string_value_for_field(field)
+    field_to_s = field.name.to_s
     type = :string
     if [:email, :permalink, :text, :wysi].include?(field.type)
       type = field.type
@@ -120,7 +120,7 @@ module UzRand
     rand_string(type)
   end
 
-  def rand_value_for_field(field)    
+  def rand_value_for_field(field)
     if [:string, :email, :permalink, :text, :wysi].include?(field.type)
       rand_string_value_for_field(field)
     elsif [:select, :radiogroup].include?(field.type)
@@ -130,19 +130,19 @@ module UzRand
         rand_in_array(field.options[:options])
       end
     elsif [:date, :time, :datetime].include?(field.type)
-      rand_time      
-    else      
-      case field.type 
+      rand_time
+    else
+      case field.type
       when :color_picker
-        rand_color       
+        rand_color
       # when :tags
         # rand_tags(field)
       when :password
         "test123"
-      when :checkbox       
+      when :checkbox
         rand_boolean
       when :money
-        rand_money      
+        rand_money
       when :currency
         rand_decimal
         # when :file
@@ -150,7 +150,7 @@ module UzRand
       when :image
         rand_image
       when :number
-        rand_int        
+        rand_int
       else
         ""
       end
@@ -160,10 +160,33 @@ module UzRand
     raise
   end
 
-  def create_hash(class_)
+  def create_hash class_
+    create_hash_from_meta class_.meta
+  end
+
+  def create_hash_from_meta meta
     result = {}
-    class_.meta.form_fields.each do |f|          
+    meta.form_fields.each do |f|
       result[f.name] = rand_value_for_field(f) unless f.type == :tags
+    end
+    result
+  end
+
+  def create_object_from_meta meta, hash, parent=nil
+    if parent != nil
+      parent.create(hash)
+    else
+      meta.class.create(hash)
+    end
+  end
+
+  def populate_model class_, count, parent=nil
+    result = []
+    hash = create_hash class_
+    if parent != nil
+      result << parent.create(hash)
+    else
+      result << meta.class.create(hash)
     end
     result
   end
