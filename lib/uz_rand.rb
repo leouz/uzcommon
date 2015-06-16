@@ -1,5 +1,3 @@
-require 'debugger'
-
 module UzRand
   require 'faker'
 
@@ -184,7 +182,7 @@ module UzRand
   end
 
   def populate_model class_, count, parent=nil
-    result = []    
+    result = []
     hash = create_hash class_
     if parent != nil
       result << parent.create(hash)
