@@ -59,6 +59,10 @@ module UzAdmin
           @fields << { type: type.to_sym, name: name, options: args }
         end
       end
+
+      def placeholder name, description
+        @fields << { type: :placeholder, name: name, options: { description: description } }
+      end
     end
   end
 end

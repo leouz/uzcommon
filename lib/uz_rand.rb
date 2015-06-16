@@ -1,3 +1,5 @@
+require 'debugger'
+
 module UzRand
   require 'faker'
 
@@ -125,10 +127,11 @@ module UzRand
       rand_string_value_for_field(field)
     elsif [:select, :radiogroup].include?(field.type)
       if field.options[:options].is_a?(Hash)
-        rand_in_hash(field.options[:options])
+        rand_in_hash(field.options[:options]).key
       else
-        rand_in_array(field.options[:options])
+        rand_in_array(field.options[:options])[1]
       end
+
     elsif [:date, :time, :datetime].include?(field.type)
       rand_time
     else
@@ -167,7 +170,7 @@ module UzRand
   def create_hash_from_meta meta
     result = {}
     meta.form_fields.each do |f|
-      result[f.name] = rand_value_for_field(f) unless f.type == :tags
+      result[f.name] = rand_value_for_field(f) unless [:tags, :placeholder].include? f.type
     end
     result
   end
@@ -181,7 +184,7 @@ module UzRand
   end
 
   def populate_model class_, count, parent=nil
-    result = []
+    result = []    
     hash = create_hash class_
     if parent != nil
       result << parent.create(hash)

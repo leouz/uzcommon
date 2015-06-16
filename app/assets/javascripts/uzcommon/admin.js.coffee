@@ -2,7 +2,7 @@ jQuery ->
   $("a[rel=popover]").popover()
   $(".tooltip").tooltip()
   $("a[rel=tooltip]").tooltip()
-  
+
   $("input.datetimepicker, .input-group.datetimepicker").each ->
     $(this).datetimepicker()
 
@@ -47,5 +47,5 @@ jQuery ->
           dataType: "script"
           url: $this.attr("data-url")
 
-
-
+  $('.select2').select2();
+  # $('.select2-tags').select2({ tags: true });

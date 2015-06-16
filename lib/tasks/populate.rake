@@ -1,3 +1,5 @@
+require 'debugger'
+
 namespace :db do
   require 'faker'
   require 'uz_rand'
