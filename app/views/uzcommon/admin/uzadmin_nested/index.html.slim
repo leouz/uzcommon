@@ -10,6 +10,9 @@
     li= @meta.humanized_name_plural
 
 
+-if @meta.page_size
+  .row: .col-md-12.pull-right= paginate @collection, :views_prefix => 'admin'
+
 table.table.table-striped
   =render "uzcommon/admin/uzadmin_partials/thead"
 
@@ -36,4 +39,5 @@ table.table.table-striped
             -href = l.href.call(m)
             = link_to "#{l.name}", href, class: 'btn btn-primary', target: "_blank"
 
-
+-if @meta.page_size
+  .row: .col-md-12.pull-right= paginate @collection, :views_prefix => 'admin'

@@ -1,3 +1,3 @@
 module Uzcommon
-  VERSION = "1.5.9.zymbop"
+  VERSION = "1.6.0.hxh"
 end

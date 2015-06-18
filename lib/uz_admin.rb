@@ -4,24 +4,24 @@ require "uz_admin/meta_builder"
 require 'active_support/concern'
 
 module UzAdmin
-  extend ActiveSupport::Concern 
+  extend ActiveSupport::Concern
 
   module ActiveRecord
-    def uz_admin &block     
+    def uz_admin &block
       if class_variable_defined?("@@meta")
         meta = class_variable_get("@@meta")
       else
         m = MetaBuilder.new(self)
         yield(m)
-        meta = m.build            
-        class_variable_set("@@meta", meta) 
+        meta = m.build
+        class_variable_set("@@meta", meta)
       end
-            
+
       m = meta
       m.fields.each do |f|
-        attr_accessible f.name        
+        attr_accessible f.name
         mount_uploader(f.name, "#{m.name}#{f.name.to_s.camelize}Uploader".constantize) if f.type == :image or f.type == :file
-        monetize "#{f.name}_cents" if f.type == :money        
+        monetize "#{f.name}_cents" if f.type == :money
       end
 
       required_fields = m.fields.select{|f| !!f.options[:required] }.map{|f| f.name}
@@ -32,19 +32,21 @@ module UzAdmin
           has_many r.field, r.class_declaration_options if r.type == :has_many
           has_one r.field, r.class_declaration_options if r.type == :has_one
           accepts_nested_attributes_for r.field, allow_destroy: true
-        end        
-        belongs_to r.field, r.class_declaration_options if r.type == :belongs_to              
-      end        
-    
+        end
+        belongs_to r.field, r.class_declaration_options if r.type == :belongs_to
+      end
+
+      paginates_per m.page_size if m.page_size
+
       include UzAdmin
     end
   end
 
-  included do |base|    
+  included do |base|
   end
 
   module ClassMethods
-    def meta          
+    def meta
       class_variable_get("@@meta")
     end
   end

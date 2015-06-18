@@ -9,11 +9,11 @@ class UzSettings
     group = SettingGroup.find_group group_key
     setting = nil
     if group
-      ["strings", "files", "texts", "booleans"].each do |t|        
+      ["strings", "files", "texts", "booleans"].each do |t|
         setting = group.send(t).find_by_key(key)
         break if setting
       end
-      
+
       if setting
         setting.value
       else
@@ -22,7 +22,7 @@ class UzSettings
     end
   end
 
-  def self.image group_key, key, format=nil        
+  def self.image group_key, key, format=nil
     group = SettingGroup.find_group group_key
     if group
       setting = group.images.find_by_key(key)
@@ -53,5 +53,10 @@ class UzSettings
     SettingGroup.find_group(group_key).settings.each do |s|
       s.destroy if s.key == setting_key
     end
+  end
+
+  def self.add_to_group key, &block
+    group = SettingGroup.find_by_key key
+    yield SettingBuilder.new(group)
   end
 end

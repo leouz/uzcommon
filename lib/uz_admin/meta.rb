@@ -8,7 +8,7 @@ module UzAdmin
   class Meta
     attr_accessor :class, :name, :humanized_name, :humanized_name_plural, :symbol, :css_wrapper_class
     attr_accessor :sort, :base_path, :index_fields, :title_field
-    attr_accessor :fields, :relationships, :custom_pages, :filters, :links
+    attr_accessor :fields, :relationships, :custom_pages, :filters, :links, :page_size
 
     def initialize hash
       initialize_class_based_args hash
@@ -74,6 +74,8 @@ module UzAdmin
 
       @title_field = :id
       @title_field = hash[:title_field] if hash[:title_field]
+      
+      @page_size = hash[:page_size]
     end
 
     def initialize_list_args hash

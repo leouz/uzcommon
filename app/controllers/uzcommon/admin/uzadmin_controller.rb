@@ -1,4 +1,4 @@
-class Uzcommon::Admin::UzadminController < AdminControllerBase  
+class Uzcommon::Admin::UzadminController < AdminControllerBase
   before_filter :uzadmin_initialize
 
   def index
@@ -6,13 +6,15 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
     @filter_options = {}
 
     if @meta.filters.any?
-      @meta.filters.each do |f|        
+      @meta.filters.each do |f|
         @filter_options[f.field], @collection = send("apply_#{f.type}_filter", @collection, f)
       end
     else
       @collection = @meta.class.scoped
-    end    
+    end
+
     @collection = @collection.order(@meta.sort)
+    @collection = @collection.page(params[:page]) if @meta.page_size
   end
 
   def apply_select_filter collection, filter
@@ -21,19 +23,21 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
     if filter_param and filter_param != 'all'
       collection = collection.where(filter.field => filter_param)
     end
+    collection = collection.page(params[:page]) if @meta.page_size
     [options, collection]
   end
 
-  def apply_string_filter collection, filter    
+  def apply_string_filter collection, filter
     filter_param = params[filter.field]
     options = { current: filter_param }
-    if filter_param and filter_param != ''      
+    if filter_param and filter_param != ''
       collection = collection.where("#{filter.field} LIKE ?", "%#{filter_param}%")
     end
-    [options, collection]  
+    collection = collection.page(params[:page]) if @meta.page_size
+    [options, collection]
   end
 
-  def apply_monthly_filter collection, filter    
+  def apply_monthly_filter collection, filter
     if params[filter.field] and params[filter.field][:year] and params[filter.field][:month]
       year, month = params[filter.field][:year].to_i, params[filter.field][:month].to_i
     else
@@ -41,14 +45,15 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
     end
 
     options = { current: Time.zone.local(year, month, 1).at_beginning_of_month }
-    
-    range = options[:current]..options[:current].at_end_of_month    
+
+    range = options[:current]..options[:current].at_end_of_month
     collection = collection.where(filter.field => range)
-    
+    collection = collection.page(params[:page]) if @meta.page_size
+
     [options, collection]
   end
 
-  def new    
+  def new
     @model = @meta.class.new
     @url = uzcommon.admin_uzadmin_create_url(@meta.base_path)
   end
@@ -58,26 +63,26 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
     @url = uzcommon.admin_uzadmin_update_url(@meta.base_path, params[:id])
   end
 
-  def view    
-    edit    
+  def view
+    edit
   end
 
-  def create    
+  def create
     if @meta.can :create
       @model = @meta.class.new(params[@meta.symbol])
-      
+
       if @model.save
         redirect_to uzcommon.admin_uzadmin_index_url(@meta.base_path), notice: "#{@meta.humanized_name} was successfully created."
       else
         render action: "new"
-      end    
+      end
     end
   end
 
-  def update    
+  def update
     if @meta.can :edit
       @model = @meta.class.find(params[:id])
-      
+
       if @model.update_attributes(params[@meta.symbol])
         redirect_to uzcommon.admin_uzadmin_index_url(@meta.base_path), notice: "#{@meta.humanized_name} was successfully updated."
       else
@@ -90,8 +95,8 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
     if @meta.can :delete
       @model = @meta.class.find(params[:id])
       @model.destroy
-      
-      redirect_to uzcommon.admin_uzadmin_index_url(@meta.base_path)    
+
+      redirect_to uzcommon.admin_uzadmin_index_url(@meta.base_path)
     end
   end
 
@@ -102,11 +107,11 @@ class Uzcommon::Admin::UzadminController < AdminControllerBase
     end
 
     render :nothing => true
-  end 
+  end
 
   private
 
-  def uzadmin_initialize    
-    @meta = UzAdmin::Helpers.find params[:base_path]   
+  def uzadmin_initialize
+    @meta = UzAdmin::Helpers.find params[:base_path]
   end
 end

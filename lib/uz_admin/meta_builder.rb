@@ -7,6 +7,7 @@ module UzAdmin
       @hash[:relationships] = []
       @hash[:custom_pages] = []
       @hash[:links] = []
+      @hash[:page_size] = nil
     end
 
     def build
@@ -35,6 +36,10 @@ module UzAdmin
 
     def link name, href, args={}
       @hash[:links] << { name: name, href: href, options: args }
+    end
+
+    def paginate page_size
+      @hash[:page_size] = page_size
     end
 
     def fields
