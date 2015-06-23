@@ -26,10 +26,10 @@ table.table.table-striped
   =render "uzcommon/admin/uzadmin_partials/thead"
 
   tbody class="#{'sortable' if @meta.sort == :sort}" data-url="#{uzcommon.admin_uzadmin_sort_path(@meta.base_path)}"
-    - @collection.each do |m|
+    - @collection.each_with_index do |m, index|
       tr id="#{@meta.symbol}_#{m.id}"
         =render partial: "uzcommon/admin/uzadmin_partials/td_sort", locals: { m: m }
-        =render partial: "uzcommon/admin/uzadmin_partials/index_fields", locals: { m: m }
+        =render partial: "uzcommon/admin/uzadmin_partials/index_fields", locals: { m: m, index: index }
         td.links                  
           -if @meta.can :view
             = link_to "View", uzcommon.admin_uzadmin_view_path(@meta.base_path, m), class: 'btn btn-primary'

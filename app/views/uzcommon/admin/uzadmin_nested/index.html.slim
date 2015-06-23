@@ -17,10 +17,10 @@ table.table.table-striped
   =render "uzcommon/admin/uzadmin_partials/thead"
 
   tbody class="#{'sortable' if @meta.sort == :sort}" data-url="#{uzcommon.admin_uzadmin_nested_sort_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path)}"
-    - @collection.each do |m|
+    - @collection.each_with_index do |m, index|
       tr id="#{@meta.symbol}_#{m.id}"
         =render partial: "uzcommon/admin/uzadmin_partials/td_sort", locals: { m: m }
-        =render partial: "uzcommon/admin/uzadmin_partials/index_fields", locals: { m: m }
+        =render partial: "uzcommon/admin/uzadmin_partials/index_fields", locals: { m: m, index: index }
         td.links
           -if @relationship.meta.can :view
             = link_to "View", uzcommon.admin_uzadmin_nested_view_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path, m), :class => 'btn btn-primary'
