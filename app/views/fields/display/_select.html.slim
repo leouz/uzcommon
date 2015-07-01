@@ -1,8 +1,0 @@
--if options[:options].is_a?(Hash)
-  -value = options[:options][value.to_sym]
--if options[:options].is_a?(Array) and options[:options].first.is_a?(Array)
-  -value = options[:options][value]
--if value.is_a?(Array)
-  -value = value[0]
--if value
-  =value

@@ -1,8 +1,0 @@
-= render :layout => "fields/wrapper_for_input", :locals => { :f => f, :field_name => field_name, :options => options } do
-  -if f.object.send("#{field_name}?")
-    -file = f.object.send(field_name)
-    a  href=("#{file}" ) = file
-    br
-    br
-  = f.file_field field_name
-  

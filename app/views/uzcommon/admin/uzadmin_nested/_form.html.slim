@@ -1,4 +1,0 @@
-= form_for [:admin, @model], url:  @url, html: { :class => 'form-horizontal' } do |f|
-  = render partial: "uzcommon/admin/uzadmin_partials/form_fields", locals: { f: f }  
-  = bs_actions f, uzcommon.admin_uzadmin_nested_index_path(@base_meta.base_path, @base_instance.id, @relationship.nested_path)
-  

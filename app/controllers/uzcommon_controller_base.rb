@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
-class UzcommonControllerBase < ActionController::Base      
-  before_filter :prepare_for_mobile 
+class UzcommonControllerBase < ActionController::Base
+  before_filter :prepare_for_mobile
   private
 
   def admin?
@@ -9,7 +9,7 @@ class UzcommonControllerBase < ActionController::Base
   helper_method :admin?
 
   def mobile_device?
-    session[:mobile_param] and session[:mobile_param] == "1"    
+    session[:mobile_param] and session[:mobile_param] == "1"
   end
   helper_method :mobile_device?
 
@@ -20,5 +20,5 @@ class UzcommonControllerBase < ActionController::Base
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
-  end 
+  end
 end

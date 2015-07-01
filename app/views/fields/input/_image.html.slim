@@ -1,7 +1,0 @@
-= render :layout => "fields/wrapper_for_input", :locals => { :f => f, :field_name => field_name, :options => options } do
-  -if f.object.send("#{field_name}?")
-    a  href=("#{f.object.send(field_name).send('url')}" ) 
-      = image_tag f.object.send(field_name).tap {|o| break o.send(:thumb) }.send('url'), :class => 'img-thumbnail'
-    br
-    br
-  = f.file_field field_name
