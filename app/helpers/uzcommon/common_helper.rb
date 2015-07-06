@@ -28,14 +28,5 @@ module Uzcommon::CommonHelper
     result = youtube_link + link.gsub('youtu.be/', '') if link.include?('youtu.be/')
     
     result   
-  end
-  
-  def flash_class(level)
-    case level
-      when :notice then "alert-info"
-      when :success then "alert-success"
-      when :error then "alert-danger"
-      when :alert then "alert-warning"
-    end
-  end
+  end  
 end
