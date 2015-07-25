@@ -1,0 +1,40 @@
+-basic_attrs = { 'ng-model' => options[:ng_model], 'name' => options[:name_tag] }.merge options[:html]
+-default_attrs = { 'required' => options[:required] }.merge basic_attrs
+
+-if [:string, :email, :password, :mask, :number, :datetime, :date].include? options[:type]
+	-attrs = default_attrs.merge({ type: options[:type] })
+	-attrs[:type] = :text if [:string, :mask, :datetime, :date].include? options[:type]
+	-attrs = attrs.merge({ 'mask' => options[:mask]}) if options[:type] == :mask
+	-attrs = attrs.merge({ 'custom-date-time-picker' => "DD/MM/YYYY H:mm" }) if options[:type] == :datetime
+	-attrs = attrs.merge({ 'custom-date-time-picker' => "DD/MM/YYYY" }) if options[:type] == :date
+	input.form-control*attrs
+	= yield
+
+/ -if options[:type] == :text
+/ 	-attrs = attrs.merge({ rows: 3 })*default_attrs
+/ 	textarea.form-control.unresizible*attrs
+/ 	= yield
+
+-if options[:type] == :checkbox
+	-attrs = { 'type' => "checkbox", 'ng-true-value' => "1", 'ng-false-value' => "0", 'ng-checked' => "#{options[:ng_model]} === 1" }
+	-attrs = attrs.merge basic_attrs
+	.checkbox
+		label
+			input*attrs
+				= options[:label]
+	= yield
+
+/ -if options[:type] == :radio
+/ 	-attrs = basic_attrs.merge { 'type' => "radio", 'ng-value' => "name" }
+/ 	.radio-group
+/ 		label.radio(ng-repeat="(name, value) in #{options[:resource]}")
+/ 			input*attrs
+/ 			| {{ value }}
+/ 	= yield
+
+-if options[:type] == :select
+	-attrs = basic_attrs.merge({ 'theme' => "bootstrap", 'ng-required' => options[:required] })
+	ui-select*attrs
+		ui-select-match {{ $select.selected.description }}
+		ui-select-choices(repeat="item.id as item in #{options[:resource]} | filter: $select.search" refresh-delay="0" refresh="500")
+			div(ng-bind-html="item.description | highlight: $select.search")			

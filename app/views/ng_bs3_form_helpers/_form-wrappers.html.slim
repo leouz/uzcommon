@@ -1,0 +1,23 @@
+-if options[:wrapper_type] == :with_label
+	-ng_valid = "(#{options[:form_name]}.#{options[:field]}.$dirty || #{options[:form_name]}.#{options[:field]}.$touched) && #{options[:form_name]}.#{options[:field]}.$invalid"	
+	-ng_class = "{\"has-error\": (#{ng_valid})}"
+	-ng_required = "#{ng_valid} && !!#{options[:form_name]}.#{options[:field]}.$error.required"
+	-ng_mask = "!!#{options[:form_name]}.#{options[:field]}.$error.mask"
+
+	.form-group(ng-class="#{ng_class}")
+		label.text-right.col-sm-3.control-label(for="#{options[:name]}")= options[:label]
+		.col-sm-9
+			= yield
+			-if options[:hint]
+				p.help-block= options[:hint]
+			-if options[:required]
+				p.help-block(ng-show="#{ng_required}")
+					span.label.label-danger= "#{options[:label]} is required."
+			-if options[:mask]
+				p.help-block(ng-show="#{ng_mask}")
+					span.label.label-danger= "#{options[:label]} has a invalid format."
+
+			-if options[:server_validation]
+				p.help-block(ng-show="#{ng_valid}")					
+					span.label.label-danger ng-repeat="s in #{options[:form_name]}.#{options[:field]}.$error.server" {{ s }}
+		.clearfix

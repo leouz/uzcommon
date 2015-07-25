@@ -1,0 +1,12 @@
+-if options[:control_type] == :form_for
+	form.form-horizontal(name="#{options[:name_tag]}" novalidate="")
+		=capture(&block) if block
+
+-if options[:control_type] == :input
+  = render layout: "ng_bs3_form_helpers/form-wrappers", locals: { options: options } do ||
+		= render layout: "ng_bs3_form_helpers/form-input-types", locals: { options: options }
+			=capture(&block) if block
+
+-if options[:control_type] == :input_without_label
+	=render layout: "ng_bs3_form_helpers/form-input-types", locals: { options: options }
+		=capture(&block) if block
