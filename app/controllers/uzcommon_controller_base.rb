@@ -83,9 +83,9 @@ class UzcommonControllerBase < ActionController::Base
     render_error :unauthorized, 'Invalid authenticity token'
   end
 
-  rescue_from CustomExceptions::WrongToken do |exception|
-    render json: { errors: { exception.token_name => 'Wrong token' } }, status: :bad_request
-  end
+  # rescue_from CustomExceptions::WrongToken do |exception|
+  #   render json: { errors: { exception.token_name => 'Wrong token' } }, status: :bad_request
+  # end
 
   rescue_from CustomExceptions::ParamsNotSatisfied do |exception|    
     errors = {}
@@ -94,24 +94,24 @@ class UzcommonControllerBase < ActionController::Base
     render json: { errors: errors }, status: :bad_request
   end
 
-  rescue_from CustomExceptions::InvalidModelState do |exception|
-    render json: { message: exception.message }, status: :unprocessable_entity
-  end
+  # rescue_from CustomExceptions::InvalidModelState do |exception|
+  #   render json: { message: exception.message }, status: :unprocessable_entity
+  # end
 
-  rescue_from CustomExceptions::ModelNotValid do |exception|
-    render json: { errors: exception.errors }, status: :unprocessable_entity
-  end
+  # rescue_from CustomExceptions::ModelNotValid do |exception|
+  #   render json: { errors: exception.errors }, status: :unprocessable_entity
+  # end
 
-  rescue_from CustomExceptions::InvalidParams do |exception|
-    errors = {}
-    exception.params.each { |p| errors[p] = "Invalid value" }
+  # rescue_from CustomExceptions::InvalidParams do |exception|
+  #   errors = {}
+  #   exception.params.each { |p| errors[p] = "Invalid value" }
     
-    render json: { errors: errors }, status: :unprocessable_entity    
-  end
+  #   render json: { errors: errors }, status: :unprocessable_entity    
+  # end
 
-  rescue_from CustomExceptions::EntityNotFound do |exception|
-    render json: { message: "Entity #{exception.entity} with id: #{exception.id} not found" }, status: :not_found
-  end
+  # rescue_from CustomExceptions::EntityNotFound do |exception|
+  #   render json: { message: "Entity #{exception.entity} with id: #{exception.id} not found" }, status: :not_found
+  # end
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception do |exception|
@@ -121,38 +121,40 @@ class UzcommonControllerBase < ActionController::Base
 
   protected
 
-  def json_success message
+  def success message
     render json: { message: message }
   end
 
-  def json_error_message message, *params
-    params[:message] = message
-    json_error params
-  end
-
-  def json_error *params
-    result = {}
-    result[:errors] = {}
-
+  def validation_error message, *params
+    params = fix_params_array params
+    errors = {}
+    
     params.each do |k, v|
-      if k == :message
-        result[:message] = v
-      elsif v.is_a? Array
-        result[:errors][k] = v
+      if v.is_a? Array
+        errors[k] = v
       else
-        result[:errors][k] = [v]
+        errors[k] = [v]
       end
     end
 
-    render json: result, status: :unprocessable_entity
+    render json: { message: message, errors: errors }, status: :unprocessable_entity
   end
 
   private
 
-  def render_error status, message
+  def fix_params_array params
+    if params.count == 1 and params[0].is_a?(Hash)
+      params[0] 
+    else
+      params
+    end
+  end
+
+  def render_error status, message, params=nil
     @error_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
     message = Rack::Utils::HTTP_STATUS_CODES[@error_code] if message == nil
     @error_message = message
+    @params = params
 
     respond_to do |format|
       format.html { render template: "errors/error", layout: false, status: status }
