@@ -1,3 +1,3 @@
 module Uzcommon
-  VERSION = "1.6.3.withoutadmin"
+  VERSION = "2.0.0"
 end
