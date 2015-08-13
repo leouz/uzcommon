@@ -5,11 +5,12 @@
     $t = $(t)
 
     t.options = $.extend({
-      errorsSelector: '.errors'
+      errorsSelector: '.form-group .errors'
       formGroupSelector: '.form-group'
-      errorClass: 'has-error'
-      useBootbox: true
+      errorClass: 'has-error'      
       addErrorsToForm: true
+      showSuccessMessageInBootbox: false
+      showErrorMessageInBootbox: true
       error: -> true
       success: -> true
     }, options)
@@ -18,36 +19,38 @@
       $('input[type=text], input[type=password], input[type=email], select, textarea', $t).val('')
 
     t.resetValidation = ->
-      $(t.options.errorsSelector, $t).empty()
+      $(t.options.errorsSelector, $t).remove()
       $(t.options.formGroupSelector, $t).removeClass(t.options.errorClass)
+
+    t.executeEvents = (result, data) ->
+      if result
+        t.options.success(data)
+      else
+        t.options.error(data)
 
     t.handleResponse = (result, data) ->      
       t.resetValidation($t)
 
-      if data.alert
-        if t.options.useBootbox
-          bootbox.alert data.alert
-        else
-          alert data.alert
-
-      if data.redirect_to
-        window.location = data.redirect_to
-
-      if data.errors
-        $ul = $('<ul>') if t.options.addErrorsToForm
+      if data.errors        
         for property of data.errors
           if data.errors.hasOwnProperty(property)            
-            $("#{t.options.formGroupSelector}[for=#{property}]", $t).addClass("has-error")         
-            $ul.append($('<li>').html(data.errors[property])) if t.options.addErrorsToForm and data.errors[property] != null
-        
-        if t.options.addErrorsToForm
-          $errors = $(t.options.errorsSelector, $t)
-          $errors.append($ul)
+            $("#{t.options.formGroupSelector}[for=#{property}]", $t).addClass("has-error")
+            if t.options.addErrorsToForm
+              $errors = $('<div>').addClass('errors')
+              for e in data.errors[property]   
+                $errors.append($('<p>').addClass('help-block').html(e))
+              $("#{t.options.formGroupSelector}[for=#{property}]", $t).append($errors)
 
-      if result
-        t.options.success()
-      else
-        t.options.error()
+      messageShown = false
+      if data.message
+        if result and t.options.showSuccessMessageInBootbox          
+          bootbox.alert data.message, () -> t.executeEvents(result, data)
+          messageShown = true
+        if (!result) and t.options.showErrorMessageInBootbox
+          bootbox.alert data.message, () -> t.executeEvents(result, data)
+          messageShown = true
+      
+      t.executeEvents(result, data) if !messageShown
     
     $t.ajaxForm
       type: 'POST'            

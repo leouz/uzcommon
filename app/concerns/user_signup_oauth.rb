@@ -10,5 +10,4 @@ module UserSignupOauth
   
   module ClassMethods
   end
-
 end

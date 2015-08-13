@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 module Uzcommon::AllHelpers
-  include CommonHelper  
-  include ContentHelper
+  include Uzcommon::CommonHelper
+  include Uzcommon::UrlHelper
+  include Uzcommon::ContentHelper
 end
 

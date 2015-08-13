@@ -89,8 +89,8 @@ class UzcommonControllerBase < ActionController::Base
 
   rescue_from CustomExceptions::ParamsNotSatisfied do |exception|    
     errors = {}
-    exception.params.each { |p| errors[p] = "Input param not satisfied" }
-
+    raw_errors = {}
+    exception.params.each { |p| errors[p] = ["is required"] }    
     render json: { errors: errors }, status: :bad_request
   end
 
@@ -114,40 +114,33 @@ class UzcommonControllerBase < ActionController::Base
   # end
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception do |exception|
+    rescue_from Exception do |exception|      
       render_error :internal_server_error, exception
     end
   end
 
   protected
 
-  def success message
-    render json: { message: message }
+  def success result
+    if result.is_a?(String)
+      render json: { message: result }
+    else
+      render json: result
+    end
   end
 
-  def validation_error message, *params
-    params = fix_params_array params
-    errors = {}
-    
-    params.each do |k, v|
-      if v.is_a? Array
-        errors[k] = v
-      else
-        errors[k] = [v]
-      end
-    end
+  def validation_error_with_message message, *params
+    render json: { message: message, errors: fix_params_array(params) }, status: :unprocessable_entity
+  end
 
-    render json: { message: message, errors: errors }, status: :unprocessable_entity
+  def validation_error *params    
+    render json: { errors: fix_params_array(params) }, status: :unprocessable_entity
   end
 
   private
 
-  def fix_params_array params
-    if params.count == 1 and params[0].is_a?(Hash)
-      params[0] 
-    else
-      params
-    end
+  def fix_params_array params    
+    params.count == 1 and (params[0].is_a?(Hash) or params[0].is_a?(ActiveModel::Errors)) ? params[0] : params    
   end
 
   def render_error status, message, params=nil
