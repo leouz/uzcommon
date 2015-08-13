@@ -1,3 +1,3 @@
 module Uzcommon
-  VERSION = "2.0.0.eat"
+  VERSION = "2.0.1"
 end
