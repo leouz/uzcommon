@@ -114,8 +114,9 @@ class UzcommonControllerBase < ActionController::Base
   # end
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception do |exception|      
-      render_error :internal_server_error, exception
+    rescue_from Exception do |exception|
+      AppError.create_from_exception 'UzcommonControllerBase#rescue_from#Exception', exception
+      render_error :internal_server_error
     end
   end
 
@@ -143,7 +144,7 @@ class UzcommonControllerBase < ActionController::Base
     params.count == 1 and (params[0].is_a?(Hash) or params[0].is_a?(ActiveModel::Errors)) ? params[0] : params    
   end
 
-  def render_error status, message, params=nil
+  def render_error status, message=nil, params=nil
     @error_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
     message = Rack::Utils::HTTP_STATUS_CODES[@error_code] if message == nil
     @error_message = message
