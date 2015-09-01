@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uzcommon (1.6.3.withoutadmin)
+    uzcommon (2.0.1)
       rails
 
 GEM
