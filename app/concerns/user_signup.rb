@@ -6,7 +6,7 @@ module UserSignup
     authenticates_with_sorcery!
 
     validates_presence_of :email
-    validates_uniqueness_of :email
+    validates_uniqueness_of :email, :case_sensitive => false
     validates :email, :email => true
 
     validates_length_of :password, :minimum => 3, :message => "password must be at least 3 characters long", :if => :password
